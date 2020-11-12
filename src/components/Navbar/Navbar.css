@@ -1,0 +1,35 @@
+.navbar {
+    border: 1px solid black;
+}
+
+.navLinkElement {
+    text-decoration: none;
+    color: white;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.navLinkElement > button {
+    /* color: white; */
+    height: 99% !important;
+}
+
+.navLinkElement > button:hover {
+    border-bottom: 4px solid white;
+    border-radius: 0%;
+}
+
+span {
+    font-size: 14px;
+    text-transform: none;
+}
+
+.navElementActive > button {
+    border-bottom: 4px solid white;
+    border-radius: 0%;
+    opacity: .3;
+}
+
+/* .navLinkElement:hover {
+    border-bottom: 1px solid black;
+} */

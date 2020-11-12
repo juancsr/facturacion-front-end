@@ -1,24 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/Navbar/Navbar';
+
+import { Route, Switch } from 'react-router-dom';
+
+import ListaFacturas from './Pages/Factura/ListarFactura/ListaFacturas';
+import CrearFactura from './Pages/Factura/CrearFactura/CrearFactura';
+import ListaProductos from './Pages/Productos/ListaProductos/ListaProductos';
+import CrearProducto from './Pages/Productos/CrearProducto/CrearProducto';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <div className="App">
+        <Route path="/" component={this} />
+        <Route path="/facturas" component={ListaFacturas} />
+        <Route path="/productos" component={ListaProductos} />
+        {/* <Route path="/producto/crear" component={CrearProducto} /> */}
+      </div>
+    </>
   );
 }
 
