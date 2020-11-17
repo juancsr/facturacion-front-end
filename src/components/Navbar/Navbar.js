@@ -206,7 +206,7 @@ const Navbar = (props) => {
                 <Toolbar>
                     {/* // TODO Agregar por logo de app */}
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Facturación
+                        Facturación Web
                     </Typography>
 
                     <div className={classes.grow} />

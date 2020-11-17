@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
@@ -27,22 +28,22 @@ import { TableComponent, CurrencyTypeProvider } from '../../../../components/Tab
 const GridProductos = ({ searchValue, setSearchValue }) => {
     const opciones = ([
         <Tooltip title="Actualizar información">
-            <IconButton size="small" color="primary" component="span">
-                <EditIcon style={{color: '#000'}} />
-            </IconButton>
+            <Button className="GridButton" variant="contained" size="small" color="primary" style={{background: '#12A6E0'}}>
+                <EditIcon style={{color: '#FFF'}} />
+            </Button>
         </Tooltip>,
         <Tooltip title="Agregar existencias">
-            <IconButton size="small" color="primary" component="span">
+            <Button className="GridButton" variant="contained" size="small" style={{background: '#07EDB1'}}>
                 <AddShoppingCartIcon style={{color: '#000'}} />
-            </IconButton>
+            </Button>
         </Tooltip>,
         <Tooltip title="Deshabilitar producto">
-            <IconButton size="small" component="span">
-                <ClearIcon style={{color: '#F07F84'}} />
-            </IconButton>
+            <Button className="GridButton" variant="contained" size="small" style={{background: '#E0284C'}} >
+                <ClearIcon style={{color: '#FFF'}} />
+            </Button>
         </Tooltip>
     ]);
-
+        
     const [columns] = useState([
         { name: 'codigo', title: 'Código' },
         { name: 'nombre', title: 'Nombre' },
@@ -73,8 +74,31 @@ const GridProductos = ({ searchValue, setSearchValue }) => {
         {
             codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
             estado: 'Inactivo', opciones
+        },
+        {
+            codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
+            estado: 'Inactivo', opciones
+        },
+        {
+            codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
+            estado: 'Inactivo', opciones
+        },
+        {
+            codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
+            estado: 'Inactivo', opciones
+        },
+        {
+            codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
+            estado: 'Inactivo', opciones
+        },
+        {
+            codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
+            estado: 'Inactivo', opciones
+        },
+        {
+            codigo: '6D', nombre: 'Sombrilla', descripcion: 'Objeto para evitar los rayos del sol', precio_unitario: 540, disponible: 1,
+            estado: 'Inactivo', opciones
         }
-
     ]);
 
     const [sorting, setSorting] = useState([
@@ -94,7 +118,7 @@ const GridProductos = ({ searchValue, setSearchValue }) => {
             >
                 <PagingState
                     defaultCurrentPage={0}
-                    pageSize={4}
+                    pageSize={10}
                 />
                 <IntegratedPaging />
                 <SearchState
@@ -111,8 +135,8 @@ const GridProductos = ({ searchValue, setSearchValue }) => {
                 <Table tableComponent={TableComponent} />
                 <TableHeaderRow showSortingControls />
                 <Toolbar />
-                <SearchPanel />
-                <PagingPanel />
+                <SearchPanel messages={{searchPlaceholder: 'Buscar...'}}/>
+                <PagingPanel messages={{info: (from) => `Mostrando ${from['from']}-${from['to']} de ${from['count']}`}}/>
             </Grid>
         </Paper>
     )

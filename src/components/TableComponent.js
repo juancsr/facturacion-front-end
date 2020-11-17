@@ -12,7 +12,7 @@ import { DataTypeProvider } from '@devexpress/dx-react-grid';
 const styles = theme => ({
   customTable: {
     '& tbody tr:nth-of-type(even)': {
-      backgroundColor: '#EBE6B1',
+      backgroundColor: '#e9e9e9',
     },
     '& tbody tr td': {
       
@@ -35,7 +35,7 @@ export const TableComponent = withStyles(styles, { name: 'TableComponent' })(Tab
 
 const CurrencyFormatter = ({ value }) => (
   <b style={{ color: '#6302FA' }}>
-    {value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
+    {value.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })}
   </b>
 );
 

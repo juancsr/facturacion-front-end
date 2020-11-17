@@ -14,7 +14,10 @@ const ListaProductos = () => {
 
     return (
         <Fragment>
-            <Typography variant="h4">Lista de Productos</Typography>
+            <div style={{background: '#f6f6f6', margin: 5}}>
+                <Typography variant="h4">Lista de Productos</Typography>
+            </div>
+            <th></th>
             <div className="Container">
                 <CrearProducto />
                 <GridProductos searchValue={searchValue} setSearchValue={setSearchValue}></GridProductos>

@@ -1,6 +1,7 @@
 :root {
   --main: #12A6E0;
   --white: #ffffff;
+  --custom-gren: #07E0A8;
 }
 body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -16,5 +17,14 @@ body {
 }
 
 .MainButton {
-  background-color: var(--main) !important;
+  background-color: var(--custom-gren) !important;
+  color: white;
+}
+
+.GridButton {
+  margin-right: 3px !important;
+}
+
+.HeaderBackground {
+  background: '#f6f6f6' !important;
 }
