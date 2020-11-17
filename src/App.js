@@ -13,6 +13,7 @@ function App() {
     <>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap');
     </style>
       <Navbar />
       <Grid container spacing={3}>
