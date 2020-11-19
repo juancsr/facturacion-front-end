@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import ClearIcon from '@material-ui/icons/Clear';
+import Tooltip from '@material-ui/core/Tooltip';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import {
     SearchState,
     IntegratedFiltering,
+    IntegratedSorting,
+    SortingState,
+    PagingState,
+    IntegratedPaging
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -10,60 +19,86 @@ import {
     Toolbar,
     SearchPanel,
     TableHeaderRow,
+    PagingPanel
 } from '@devexpress/dx-react-grid-material-ui';
 
-const GridProductos = ({ searchValue, setSearchValue }) => {
+
+import { TableComponent, CurrencyTypeProvider } from '../../../../components/TableComponent';
+import DetalleDialogPlugin from './grid-plugins/FacturaDetallePlugin';
+import DetailDialog from './FacturaDetalleDialog';
+
+const GridProductos = ({ searchValue, setSearchValue, data }) => {
+
     const [columns] = useState([
+        { name: 'codigo', title: 'Código' },
         { name: 'vendedor', title: 'Vendedor' },
         { name: 'cliente', title: 'Cliente' },
-        { name: 'codigo', title: 'Código' },
         { name: 'estado', title: 'Estado' },
         { name: 'fechaRegistro', title: 'Fecha de Registro' },
         { name: 'fechaCompra', title: 'Fecha de Compra' },
-        { name: 'totalProductos', title: 'Total Productos Comprados' },
-        { name: 'valorTotalIVA', title: 'Valor Total IVA' },
+        // { name: 'totalProductos', title: 'Total Productos Comprados' },
+        // { name: 'valorTotalIVA', title: 'Valor Total IVA' },
         { name: 'valorTotal', title: 'Valor Total' },
         { name: 'opciones', title: 'Opciones' }
     ]);
 
-    const opciones = (
-        [<button>Anular</button>,
-        <button>MostrarPDF</button>])
+    const [currencyColumns] = useState(['valorTotal']);
 
-    const [data, setData] = useState([
-        {
-            vendedor: 'Erika Lucero', cliente: 'Nicolas Meneses', codigo: '36B', estado: 'HABILITADA',
-            fechaRegistro: '16/01/2020', fechaCompra: '16/01/2020', totalProductos: 30, valorTotalIVA: 300, valorTotal: 400,
-            opciones: opciones
-        },
-        {
-            vendedor: 'Juan Sarmiento', descripcion: 'Mariela Reyes', codigo: '37B', estado: 'ANULADA',
-            fechaRegistro: '02/10/2020', fechaCompra: '16/01/2020', totalProductos: 30, valorTotalIVA: 300, valorTotal: 300,
-            opciones: opciones
-        },
-        {
-            vendedor: 'Lorena Reyes', descripcion: 'Luis Sabogal', codigo: '36A', estado: 'HABILITADA',
-            fechaRegistro: '24/12/2020', fechaCompra: '24/12/2020', totalProductos: 30, valorTotalIVA: 300, valorTotal: 800,
-            opciones: opciones
-        }
+    const [sorting, setSorting] = useState([
+        { columnName: 'vendedor', direction: 'asc' },
+        { columnName: 'codigo', direction: 'asc' },
+        { columnName: 'cliente', direction: 'asc' },
+        { columnName: 'estado', direction: 'asc' },
+        { columnName: 'fechaRegistro', direction: 'asc' },
+        { columnName: 'fechaCompra', direction: 'asc' },
+        { columnName: 'valorTotal', direction: 'asc' }
     ]);
 
+    const opciones = ([
+        <Tooltip title="Descargar factura">
+            {/* <IconButton className="GridButton" size="small" color="primary" style={{background: '#12A6E0'}}> */}
+            <IconButton className="GridButton" size="small">
+                <SaveAltIcon style={{color: '#12A6E0'}} />
+            </IconButton>
+        </Tooltip>,
+        <Tooltip title="Anular factura">
+            {/* <IconButton className="GridButton" variant="contained" size="small" style={{background: '#E0284C'}} > */}
+            <IconButton className="GridButton" size="small" style={{background: ''}} >
+                <ClearIcon style={{color: '#E0284C'}} />
+            </IconButton>
+        </Tooltip>
+    ]);
+
+    // const data = 
 
     return (
         <Paper>
             <Grid
-                rows={data}
+                rows={data.map(element => {return{...element, opciones}})}
                 columns={columns}
             >
+                <PagingState
+                    defaultCurrentPage={0}
+                    pageSize={10}
+                />
+                <IntegratedPaging />
                 <SearchState
                     value={searchValue}
                     onValueChange={setSearchValue}
                 />
                 <IntegratedFiltering />
-                <Table />
-                <TableHeaderRow />
+                <SortingState
+                    sorting={sorting}
+                    onSortingChange={setSorting}
+                />
+                <IntegratedSorting />
+                <CurrencyTypeProvider for={currencyColumns} />
+                <Table tableComponent={TableComponent}/>
+                <DetalleDialogPlugin dialogComponent={DetailDialog} />
+                <TableHeaderRow showSortingControls />
                 <Toolbar />
-                <SearchPanel />
+                <SearchPanel messages={{searchPlaceholder: 'Buscar...'}}/>
+                <PagingPanel messages={{info: (from) => `Mostrando ${from['from']}-${from['to']} de ${from['count']}`}}/>
             </Grid>
         </Paper>
     )

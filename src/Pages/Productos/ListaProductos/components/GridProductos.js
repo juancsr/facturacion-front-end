@@ -48,7 +48,7 @@ const GridProductos = ({ searchValue, setSearchValue }) => {
         { name: 'codigo', title: 'Código' },
         { name: 'nombre', title: 'Nombre' },
         { name: 'estado', title: 'Estado' },
-        { name: 'descripcion', title: 'Descripción' },
+        // { name: 'descripcion', title: 'Descripción' },
         { name: 'disponible', title: 'Existencias' },
         { name: 'precio_unitario', title: 'Precio/U' },
         { name: 'opciones', title: 'Opciones' }
