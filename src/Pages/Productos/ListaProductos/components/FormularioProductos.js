@@ -187,7 +187,7 @@ const Formulario = ({ open, setOpenModal }) => {
                                     {/* TODO: Actualizar con valores reales de categorias */}
                                     <Select
                                         defaultValue={'Selecciona una '}
-                                        value={category.nombre}
+                                        // value={category.nombre}
                                         onChange={e => setCategory(e.target.value)}
                                         required
                                     >
