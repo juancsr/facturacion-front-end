@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.0",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -20,13 +21,16 @@
     "react-scripts": "4.0.0",
     "reactstrap": "^8.7.1",
     "redux": "^4.0.5",
-    "web-vitals": "^0.2.4"
+    "redux-thunk": "^2.3.0",
+    "web-vitals": "^0.2.4",
+    "prop-types": "^15.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "lint": "./node_modules/bin/eslint",
     "deploy:firebase": "yarn build && firebase deploy"
   },
   "eslintConfig": {
@@ -46,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1"
   }
 }

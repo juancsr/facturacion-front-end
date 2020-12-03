@@ -1,20 +1,15 @@
+import React, { Fragment } from 'react';
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
-
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Navbar from './components/Navbar/Navbar';
 import ListaFacturas from './Pages/Factura/ListarFactura/ListaFacturas';
 import ListaProductos from './Pages/Productos/ListaProductos/ListaProductos';
-import { Fragment } from 'react';
 
 function App() {
   return (
     <>
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39&display=swap');
-    </style>
       <Navbar />
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -24,9 +19,9 @@ function App() {
           </Paper>
         </Grid>
       </Grid>
-      <Fragment>
-        
-      </Fragment>
+      {/* <Fragment>
+
+      </Fragment> */}
     </>
   );
 }
