@@ -66,7 +66,6 @@ const DetailDialog = ({ factura }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    console.log(factura);
     setOpen(true);
   };
   const handleClose = () => {

@@ -1,6 +1,16 @@
 import PropTypes from 'prop-types';
 
 export const productoPropType = PropTypes.shape({
+  id_producto: PropTypes.number,
+  nombre: PropTypes.string,
+  descripcion: PropTypes.string,
+  precio_unidad: PropTypes.number,
+  id_categoria: PropTypes.number,
+  codigo: PropTypes.string,
+  existencias: PropTypes.number,
+});
+
+export const productoFacturaPropType = PropTypes.shape({
   codigo: PropTypes.string,
   cantidad: PropTypes.number,
   nombre: PropTypes.string,
@@ -9,4 +19,4 @@ export const productoPropType = PropTypes.shape({
   valorIVA: PropTypes.number,
 });
 
-export const productosPropType = PropTypes.arrayOf(productoPropType);
+export const productosPropType = PropTypes.arrayOf(productoFacturaPropType);

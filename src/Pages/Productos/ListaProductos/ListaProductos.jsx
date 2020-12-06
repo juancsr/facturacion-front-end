@@ -1,8 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import GridProductos from './components/GridProductos';
 import CrearProducto from './components/CrearProducto';
+import { productosReducerPropTypes } from '../../../propTypes/reducersPropTypes';
 import * as productosActions from '../../../redux/actions/productosAction';
 
 // eslint-disable-next-line react/prop-types
@@ -10,11 +13,11 @@ const ListaProductos = ({ productosReducer, GetAllProductos }) => {
   const [searchValue, setSearchValue] = useState('');
   const [data, setData] = useState([]);
 
+  useEffect(() => GetAllProductos(), []);
+
   useEffect(() => {
-    GetAllProductos();
-    // eslint-disable-next-line react/prop-types
     setData(productosReducer.listaProductos);
-  }, [productosReducer, GetAllProductos]);
+  }, [productosReducer.listaProductos]);
 
   return (
     <>
@@ -23,10 +26,17 @@ const ListaProductos = ({ productosReducer, GetAllProductos }) => {
       </div>
       <div className="Container">
         <CrearProducto />
-        <GridProductos searchValue={searchValue} setSearchValue={setSearchValue} data={data} />
+        {data.length > 0
+          ? <GridProductos searchValue={searchValue} setSearchValue={setSearchValue} data={data} />
+          : <CircularProgress />}
       </div>
     </>
   );
+};
+
+ListaProductos.propTypes = {
+  productosReducer: productosReducerPropTypes.isRequired,
+  GetAllProductos: PropTypes.func.isRequired,
 };
 
 // eslint-disable-next-line max-len

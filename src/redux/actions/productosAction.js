@@ -1,21 +1,15 @@
-import axios from 'axios';
-import { TODOS_PRODUCTOS } from '../types/productosTypes';
+import {
+  TODOS_PRODUCTOS, REGISTRAR_PRODUCTO, SELECCIONAR_PRODUCTO, AGREGAR_EXISTENCIAS,
+} from '../types/productosTypes';
+import { GET, POST, PUT } from './requestsHandler';
 
-const https = require('https');
+const baseUrl = 'http://localhost:3010/';
 
 export const GetAllProductos = () => async (dispatch) => {
   // TODO: Corregir para evitar el httpsAgent
   try {
-    // const categoriesResponse = await axios.get('https://localhost:3010/getCategorias');
-    const url = 'http://localhost:3010/getProducts';
-    const productsResponse = await axios({
-      url,
-      method: 'GET',
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
-      }),
-    });
-
+    const url = `${baseUrl}getProducts`;
+    const productsResponse = await GET(url);
     dispatch({
       type: TODOS_PRODUCTOS,
       payload: productsResponse.data,
@@ -29,22 +23,43 @@ export const GetAllProductos = () => async (dispatch) => {
 export const RegistrarProducto = (producto) => async (dispatch) => {
   // TODO: Corregir para evitar el httpsAgent
   try {
-    // const categoriesResponse = await axios.get('https://localhost:3010/getCategorias');
-    const url = 'http://localhost:3010/addProduct';
-    const productsResponse = await axios({
-      url,
-      method: 'POST',
-      data: producto,
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
-      }),
-    });
+    const url = `${baseUrl}addProduct`;
+    const productsResponse = await POST(url, producto);
     dispatch({
-      type: TODOS_PRODUCTOS,
+      type: REGISTRAR_PRODUCTO,
       payload: productsResponse.data,
     });
   } catch (error) {
   // eslint-disable-next-line no-console
-    console.log('error obteniendo productos: ', error);
+    console.error('error obteniendo productos: ', error);
+  }
+};
+
+export const SeleccionarProducto = (producto) => (dispatch) => {
+  try {
+    dispatch({
+      type: SELECCIONAR_PRODUCTO,
+      payload: producto,
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error al seleccionar producto: ', error);
+  }
+};
+
+export const AgregarExistencias = ({ codigo, cantidad, descripcion }) => async (dispatch) => {
+  try {
+    const url = `${baseUrl}addExistenciasProducto`;
+    const data = { codigo, cantidad, descripcion };
+    const existenciasResponse = await PUT(url, data);
+    if (existenciasResponse.data.msg === 'OK') {
+      dispatch({
+        type: AGREGAR_EXISTENCIAS,
+      });
+      dispatch(GetAllProductos());
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error agregando existencias: ', error);
   }
 };

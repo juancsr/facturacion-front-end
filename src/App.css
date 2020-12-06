@@ -10,6 +10,8 @@ body {
 .Container {
   width: 100%;
   margin-top: 20px;
+  text-align: center;
+  margin-left: auto;
 }
 
 .PageTitle {

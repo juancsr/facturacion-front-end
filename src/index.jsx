@@ -5,14 +5,18 @@ import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 // import reportWebVitals from './reportWebVitals';
 import App from './App';
 
 const store = createStore(
   reducers, // Reducers
-  {}, // estado inicial
-  applyMiddleware(reduxThunk),
+  // {}, // estado inicial
+  composeWithDevTools(
+    applyMiddleware(reduxThunk),
+  ),
 );
 
 ReactDOM.render(

@@ -77,7 +77,6 @@ const Formulario = ({
     setCategory(null);
   };
 
-  // TODO: Cambiar la llamada al endpoint por un evento administrado por redux
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -85,9 +84,8 @@ const Formulario = ({
       nombre: name,
       descripcion: description,
       precio_unidad: price,
-      id_categoria: category,
+      id_categoria: category.id_categoria,
     };
-    console.log('data: ', data);
     setShowMessage(true);
     setOpenModal(false);
     RegistrarProducto(data);
