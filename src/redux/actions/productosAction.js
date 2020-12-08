@@ -31,7 +31,7 @@ export const RegistrarProducto = (producto) => async (dispatch) => {
     });
   } catch (error) {
   // eslint-disable-next-line no-console
-    console.error('error obteniendo productos: ', error);
+    console.error('error al registrar el producto: ', error);
   }
 };
 

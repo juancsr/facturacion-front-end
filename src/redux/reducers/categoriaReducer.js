@@ -1,4 +1,4 @@
-import TODAS_CATEGORIAS from '../redux/types/categoriasTypes';
+import TODAS_CATEGORIAS from '../types/categoriasTypes';
 
 const INITIAL_STATE = {
   listaCategorias: [],

@@ -16,3 +16,8 @@ export const productosReducerPropTypes = {
   productoSeleccionado: productoPropType,
   registrado: PropTypes.bool.isRequired,
 };
+
+export const facturacionReducerPropTypes = {
+  listaFacturas: PropTypes.array.isRequired,
+  facturasHabilitadas: PropTypes.bool.isRequired,
+};

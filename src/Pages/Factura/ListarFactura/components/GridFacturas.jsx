@@ -32,15 +32,15 @@ const GridProductos = ({ data }) => {
     { name: 'vendedor', title: 'Vendedor' },
     { name: 'cliente', title: 'Cliente' },
     { name: 'estado', title: 'Estado' },
-    { name: 'fechaRegistro', title: 'Fecha de Registro' },
-    { name: 'fechaCompra', title: 'Fecha de Compra' },
-    // { name: 'totalProductos', title: 'Total Productos Comprados' },
+    { name: 'fecha_registro', title: 'Fecha de Registro' },
+    { name: 'fecha_compra', title: 'Fecha de Compra' },
+    { name: 'valor_total', title: 'Total Productos Comprados' },
     // { name: 'valorTotalIVA', title: 'Valor Total IVA' },
     { name: 'valorTotal', title: 'Valor Total' },
     { name: 'opciones', title: 'Opciones' },
   ]);
 
-  const [currencyColumns] = useState(['valorTotal']);
+  const [currencyColumns] = useState(['valor_total']);
 
   const [sorting, setSorting] = useState([
     { columnName: 'vendedor', direction: 'asc' },
@@ -73,33 +73,38 @@ const GridProductos = ({ data }) => {
 
   return (
     <Paper>
-      <Grid
-        rows={data.map((element) => ({ ...element, opciones }))}
-        columns={columns}
-      >
-        <PagingState
-          defaultCurrentPage={0}
-          pageSize={10}
-        />
-        <IntegratedPaging />
-        <SearchState
-          value={searchValue}
-          onValueChange={setSearchValue}
-        />
-        <IntegratedFiltering />
-        <SortingState
-          sorting={sorting}
-          onSortingChange={setSorting}
-        />
-        <IntegratedSorting />
-        <CurrencyTypeProvider for={currencyColumns} />
-        <Table tableComponent={TableComponent} />
-        <DetalleDialogPlugin dialogComponent={DetailDialog} />
-        <TableHeaderRow showSortingControls />
-        <Toolbar />
-        <SearchPanel messages={{ searchPlaceholder: 'Buscar...' }} />
-        <PagingPanel messages={{ info: (from) => `Mostrando ${from.from}-${from.to} de ${from.count}` }} />
-      </Grid>
+      {data.length > 0
+        ? (
+          <Grid
+            rows={data.map((element) => ({ ...element, opciones }))}
+            columns={columns}
+          >
+            <PagingState
+              defaultCurrentPage={0}
+              pageSize={10}
+            />
+            <IntegratedPaging />
+            <SearchState
+              value={searchValue}
+              onValueChange={setSearchValue}
+            />
+            <IntegratedFiltering />
+            <SortingState
+              sorting={sorting}
+              onSortingChange={setSorting}
+            />
+            <IntegratedSorting />
+            <CurrencyTypeProvider for={currencyColumns} />
+            <Table tableComponent={TableComponent} />
+            <DetalleDialogPlugin dialogComponent={DetailDialog} />
+            <TableHeaderRow showSortingControls />
+            <Toolbar />
+            <SearchPanel messages={{ searchPlaceholder: 'Buscar...' }} />
+            <PagingPanel messages={{ info: (from) => `Mostrando ${from.from}-${from.to} de ${from.count}` }} />
+          </Grid>
+        )
+        : <p style={{ textAlign: 'center' }}>No hay datos de facturas</p>}
+
     </Paper>
   );
 };

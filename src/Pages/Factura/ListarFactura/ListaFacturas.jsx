@@ -1,82 +1,24 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import GridFactura from './components/GridFacturas';
 import FilterSelect from './components/FilterSelect';
+import * as facturasActions from '../../../redux/actions/facturasAction';
+import { facturacionReducerPropTypes } from '../../../propTypes/reducersPropTypes';
 
-const ListaFactura = () => {
+const ListaFactura = ({ facturasReducer, GetAllFacturas }) => {
   const [searchValue, setSearchValue] = useState('');
 
   // TODO: Use setData
   // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState([
-    {
-      vendedor: 'Erika Lucero',
-      cliente: 'Nicolas Meneses',
-      codigo: '36B',
-      estado: 'VIGENTE',
-      fechaRegistro: '16/01/2020',
-      fechaCompra: '16/01/2020',
-      productos: [
-        {
-          codigo: 'ABF', cantidad: 2, nombre: 'Balón', precio: 5000, iva: 19, valorIVA: 700,
-        },
-        {
-          codigo: 'ABG', cantidad: 1, nombre: 'Balón', precio: 5000, iva: 19, valorIVA: 700,
-        },
-        {
-          codigo: 'ABX', cantidad: 1, nombre: 'Guantes', precio: 1000, iva: 19, valorIVA: 190,
-        },
-        {
-          codigo: 'ABW', cantidad: 1, nombre: 'Sombrilla', precio: 20000, iva: 5, valorIVA: 1000,
-        },
-      ],
-      totalProductos: 30,
-      valorTotalIVA: 2890,
-      valorTotal: 33590,
+  const [data, setData] = useState(null);
 
-    },
-    {
-      vendedor: 'Juan Sarmiento',
-      descripcion: 'Mariela Reyes',
-      codigo: '37B',
-      estado: 'ANULADA',
-      fechaRegistro: '02/10/2020',
-      fechaCompra: '16/01/2020',
-      totalProductos: 30,
-      valorTotalIVA: 1890,
-      valorTotal: 27890,
-      productos: [
-        {
-          codigo: 'ABF', cantidad: 2, nombre: 'Balón', precio: 5000, iva: 19, valorIVA: 700,
-        },
-        {
-          codigo: 'ABA', cantidad: 2, nombre: 'Guantes', precio: 1000, iva: 19, valorIVA: 190,
-        },
-        {
-          codigo: 'ABW', cantidad: 2, nombre: 'Sombrilla', precio: 20000, iva: 5, valorIVA: 1000,
-        },
-      ],
+  useEffect(() => GetAllFacturas(), []);
 
-    },
-    {
-      vendedor: 'Lorena Reyes',
-      descripcion: 'Luis Sabogal',
-      codigo: '36A',
-      estado: 'VIGENTE',
-      fechaRegistro: '24/12/2020',
-      fechaCompra: '24/12/2020',
-      totalProductos: 30,
-      valorTotalIVA: 890,
-      valorTotal: 6890,
-      productos: [
-        {
-          codigo: 'ABF', cantidad: 2, nombre: 'Balón', precio: 5000, iva: 19, valorIVA: 700,
-        },
-        {
-          codigo: 'ABS', cantidad: 2, nombre: 'Guantes', precio: 1000, iva: 19, valorIVA: 190,
-        },
-      ],
-    },
-  ]);
+  useEffect(() => {
+    setData(facturasReducer.listaFacturas);
+  }, [facturasReducer.listaFacturas]);
 
   return (
     <>
@@ -84,9 +26,18 @@ const ListaFactura = () => {
       <div style={{ textAlign: 'left', marginLeft: 10 }}>
         <FilterSelect />
       </div>
-      <GridFactura data={data} searchValue={searchValue} setSearchValue={setSearchValue} />
+      {data !== null
+        ? <GridFactura data={data} searchValue={searchValue} setSearchValue={setSearchValue} />
+        : <CircularProgress />}
     </>
   );
 };
 
-export default ListaFactura;
+ListaFactura.propTypes = {
+  facturasReducer: facturacionReducerPropTypes.isRequired,
+  GetAllFacturas: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (facturasReducer) => facturasReducer;
+
+export default connect(mapStateToProps, facturasActions)(ListaFactura);
