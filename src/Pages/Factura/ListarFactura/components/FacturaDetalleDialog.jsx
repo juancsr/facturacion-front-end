@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -72,9 +72,7 @@ const DetailDialog = ({ factura, facturasReducer, GetProductosFactura }) => {
   const [total, setTotal] = useState(0);
   useEffect(() => {
     if (open) {
-      // eslint-disable-next-line camelcase
-      const { id_factura } = factura;
-      GetProductosFactura({ id_factura });
+      GetProductosFactura({ id_factura: factura.id_factura });
     }
   }, [open]);
 
@@ -98,103 +96,106 @@ const DetailDialog = ({ factura, facturasReducer, GetProductosFactura }) => {
 
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-          Open dialog
-        </Button> */}
-      <Tooltip title={`Ver detalle de la factura ${factura.codigo}`}>
-        <IconButton onClick={handleClickOpen}>
-          <CallMadeIcon />
-        </IconButton>
-      </Tooltip>
-      <Dialog
-        fullWidth
-        maxWidth="md"
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          <h4>
-            Detalle de la factura:
-            {' '}
-            <em>{factura.codigo}</em>
-          </h4>
-        </DialogTitle>
-        <DialogContent dividers>
-          <Grid container spacing={1}>
-            <Grid item xs={6}>
-              <Typography gutterBottom>
-                <b>Vendedor(a): </b>
-                {' '}
-                {factura.vendedor}
-              </Typography>
-            </Grid>
+      { factura
+        ? (
+          <>
+            <Tooltip title={`Ver detalle de la factura ${factura.codigo}`}>
+              <IconButton onClick={handleClickOpen}>
+                <CallMadeIcon />
+              </IconButton>
+            </Tooltip>
+            <Dialog
+              fullWidth
+              maxWidth="md"
+              onClose={handleClose}
+              aria-labelledby="customized-dialog-title"
+              open={open}
+            >
+              <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+                <h4>
+                  Detalle de la factura:
+                  {' '}
+                  <em>{factura.codigo}</em>
+                </h4>
+              </DialogTitle>
+              <DialogContent dividers>
+                <Grid container spacing={1}>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>
+                      <b>Vendedor(a): </b>
+                      {' '}
+                      {factura.vendedor}
+                    </Typography>
+                  </Grid>
 
-            <Grid item xs={4}>
-              <Typography gutterBottom>
-                <b>ESTADO: </b>
-                {' '}
-                {factura.estado}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography gutterBottom>
-                <b>Cliente: </b>
-                {' '}
-                {factura.cliente}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography gutterBottom>
-                <b>Fecha de compra:</b>
-                {' '}
-                {factura.fecha_compra}
-              </Typography>
-            </Grid>
-            <Grid item xs={6}><></></Grid>
-            <Grid item xs={4}>
-              <Typography gutterBottom>
-                <b>Fecha de registro: </b>
-                {factura.fecha_registro}
-              </Typography>
-            </Grid>
+                  <Grid item xs={4}>
+                    <Typography gutterBottom>
+                      <b>ESTADO: </b>
+                      {' '}
+                      {factura.estado}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>
+                      <b>Cliente: </b>
+                      {' '}
+                      {factura.cliente}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography gutterBottom>
+                      <b>Fecha de compra:</b>
+                      {' '}
+                      {factura.fecha_compra}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}><></></Grid>
+                  <Grid item xs={4}>
+                    <Typography gutterBottom>
+                      <b>Fecha de registro: </b>
+                      {factura.fecha_registro}
+                    </Typography>
+                  </Grid>
 
-            <Grid item xs={12}>
-              <Typography gutterBottom><b>Productos</b></Typography>
-              <br />
-              <FacturaProductosGrid productos={facturasReducer.productos_factura} />
-            </Grid>
-            <Grid item xs={4}>
-              <Typography gutterBottom>
-                <b>Total IVA: </b>
-              </Typography>
-            </Grid>
-            <Grid item xs={8}>
-              <Typography gutterBottom>
-                <CurrencyFormat value={totalIva} displayType="text" thousandSeparator prefix="$" />
-              </Typography>
-            </Grid>
-            <Grid item xs={4}>
-              <Typography gutterBottom>
-                <b>Total Factura (IVA incluido): </b>
-              </Typography>
-            </Grid>
-            <Grid item xs={8}>
-              <Typography gutterBottom>
-                <CurrencyFormat value={total} displayType="text" thousandSeparator prefix="$" />
-              </Typography>
-            </Grid>
-          </Grid>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Cerrar
-          </Button>
-          <Button autoFocus onClick={handleClose} color="primary" variant="contained">
-            Descargar PDF
-          </Button>
-        </DialogActions>
-      </Dialog>
+                  <Grid item xs={12}>
+                    <Typography gutterBottom><b>Productos</b></Typography>
+                    <br />
+                    <FacturaProductosGrid productos={facturasReducer.productos_factura} />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography gutterBottom>
+                      <b>Total IVA: </b>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography gutterBottom>
+                      <CurrencyFormat value={totalIva} displayType="text" thousandSeparator prefix="$" />
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Typography gutterBottom>
+                      <b>Total Factura (IVA incluido): </b>
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <Typography gutterBottom>
+                      <CurrencyFormat value={total} displayType="text" thousandSeparator prefix="$" />
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose} color="primary">
+                  Cerrar
+                </Button>
+                <Button autoFocus onClick={handleClose} color="primary" variant="contained">
+                  Descargar PDF
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </>
+        )
+        : <></>}
     </div>
   );
 };
