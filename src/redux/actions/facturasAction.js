@@ -57,12 +57,12 @@ export const RegistrarFactura = (factura) => async (dispatch) => {
   dispatch(cargando());
 
   try {
-    const url = `${baseUrl}addFactura`;
-    const facturaResponse = await POST(url, factura);
+    const url = `${baseUrl}insertFactura`;
+    await POST(url, factura);
     dispatch({
       type: REGISTRAR_FACTURA,
-      payload: facturaResponse.data,
     });
+    dispatch(GetAllFacturas());
   } catch (error) {
     dispatch(dispatchError('No se pudo registrar la factura'));
   }

@@ -28,7 +28,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import { connect } from 'react-redux';
-import { AbrirFormularioRegistro } from '../../../redux/actions/facturasAction';
+import { AbrirFormularioRegistro, RegistrarFactura } from '../../../redux/actions/facturasAction';
 import { GetAllProductos } from '../../../redux/actions/productosAction';
 import { GetAllClientes } from '../../../redux/actions/clientesActions';
 import { GetAllVendedores } from '../../../redux/actions/operadoresActions';
@@ -63,6 +63,7 @@ const useStyles = makeStyles(() => ({
 const FormularioFactura = ({
   facturasReducer, clientesReducer, operadoresReducer,
   AbrirFormularioRegistro, GetAllProductos, GetAllClientes, GetAllVendedores,
+  RegistrarFactura,
 }) => {
   useEffect(() => {
     if (facturasReducer.formularioFacturaAbierto) {
@@ -86,13 +87,11 @@ const FormularioFactura = ({
   const [tipoPago, setTipoPago] = useState('EFECTIVO');
 
   // Reset all the input values
-  // const resetValues = () => {
-  //   setCode('');
-  //   setName('');
-  //   setDescription('');
-  //   setPrice(0);
-  //   setCategory(null);
-  // };
+  const resetValues = () => {
+    setCodigo('');
+    setFechaCompra('');
+    setTipoPago('EFECTIVO');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -105,14 +104,15 @@ const FormularioFactura = ({
       id_vendedor: operadoresReducer.vendedorSeleccionado.id_vendedor.toString(),
       codigo,
       productos,
-      fechaCompra,
+      fecha_compra: fechaCompra,
       tipo_pago: tipoPago,
     };
-    console.log('data: ', data);
+    console.log(data);
+    RegistrarFactura(data);
+    // console.log('data: ', data);
     // setShowMessage(true);
-    // AbrirFormularioRegistro(false);
-    // RegistrarProducto(data);
-    // resetValues();
+    AbrirFormularioRegistro(false);
+    resetValues();
   };
 
   return (
@@ -246,6 +246,7 @@ FormularioFactura.propTypes = {
   GetAllProductos: PropTypes.func.isRequired,
   GetAllClientes: PropTypes.func.isRequired,
   GetAllVendedores: PropTypes.func.isRequired,
+  RegistrarFactura: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({
@@ -259,6 +260,7 @@ const mapDispatchToProps = {
   GetAllProductos,
   GetAllClientes,
   GetAllVendedores,
+  RegistrarFactura,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormularioFactura);

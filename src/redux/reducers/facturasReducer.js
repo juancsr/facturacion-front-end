@@ -23,7 +23,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
     case REGISTRAR_FACTURA:
       return {
-        ...state, listaFacturas: action.payload, cargando: false, error: '',
+        ...state, cargando: false, error: '',
       };
     case PRODUCTOS_FACTURA:
       return {
