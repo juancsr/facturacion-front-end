@@ -5,3 +5,4 @@ export const REGISTRAR_FACTURA = 'post_factura';
 export const CARGANDO = 'cargando';
 export const ERROR = 'error';
 export const PRODUCTOS_FACTURA = 'productos_factura';
+export const ABRIR_FORMULARIO_FACTURA = 'abrir_formulario_factura';

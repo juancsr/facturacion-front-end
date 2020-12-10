@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const BASE_URL = 'http://localhost:3010/';
+
 const https = require('https');
 
 export const GET = async (url) => {

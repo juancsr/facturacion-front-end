@@ -1,6 +1,6 @@
 import {
   TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
-  ERROR, PRODUCTOS_FACTURA,
+  ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA,
 } from '../types/facturacionTypes';
 import { GET, POST } from './requestsHandler';
 
@@ -81,13 +81,9 @@ export const SetFacturasHabilitadas = (habilitar) => async (dispatch) => {
 };
 
 export const GetProductosFactura = (idFactura) => async (dispatch) => {
-  // dispatch(cargando());
-
   try {
     const url = `${baseUrl}getDetalleFactura`;
-    console.log(idFactura);
     const response = await POST(url, idFactura);
-    console.log(response);
     dispatch({
       type: PRODUCTOS_FACTURA,
       payload: response.data,
@@ -95,4 +91,11 @@ export const GetProductosFactura = (idFactura) => async (dispatch) => {
   } catch (error) {
     dispatch(dispatchError('No se pudo obtener el detalle de esta factura'));
   }
+};
+
+export const AbrirFormularioRegistro = (abierto = true) => async (dispatch) => {
+  dispatch({
+    type: ABRIR_FORMULARIO_FACTURA,
+    payload: abierto,
+  });
 };

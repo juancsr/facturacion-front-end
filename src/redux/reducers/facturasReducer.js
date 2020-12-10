@@ -1,6 +1,6 @@
 import {
   TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
-  ERROR, PRODUCTOS_FACTURA,
+  ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA,
 } from '../types/facturacionTypes';
 
 const INITIAL_STATE = {
@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   cargando: false,
   error: '',
   productos_factura: [],
+  formularioFacturaAbierto: false,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -31,6 +32,8 @@ const reducer = (state = INITIAL_STATE, action) => {
       return { ...state, cargando: true };
     case ERROR:
       return { ...state, payload: action.payload, cargando: false };
+    case ABRIR_FORMULARIO_FACTURA:
+      return { ...state, formularioFacturaAbierto: action.payload };
     default:
       return state;
   }

@@ -5,6 +5,10 @@ export const loginReducerPropTypes = {
   username: PropTypes.string,
 };
 
+export const clientesReducerPropTypes = {
+  listaClientes: PropTypes.array.isRequired,
+};
+
 export const notificationReducerPropTypes = {
   productosNotf: PropTypes.number,
   facturasNotf: PropTypes.number,
