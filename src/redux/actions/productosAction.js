@@ -1,14 +1,14 @@
 import {
   TODOS_PRODUCTOS, REGISTRAR_PRODUCTO, SELECCIONAR_PRODUCTO, AGREGAR_EXISTENCIAS,
 } from '../types/productosTypes';
-import { GET, POST, PUT } from './requestsHandler';
-
-const baseUrl = 'http://localhost:3010/';
-
+import {
+  GET, POST, PUT, BASE_URL,
+} from './requestsHandler';
+// const BASE_URL = 'http://localhost:3010/';
 export const GetAllProductos = () => async (dispatch) => {
   // TODO: Corregir para evitar el httpsAgent
   try {
-    const url = `${baseUrl}getProducts`;
+    const url = `${BASE_URL}getProducts`;
     const productsResponse = await GET(url);
     dispatch({
       type: TODOS_PRODUCTOS,
@@ -23,7 +23,7 @@ export const GetAllProductos = () => async (dispatch) => {
 export const RegistrarProducto = (producto) => async (dispatch) => {
   // TODO: Corregir para evitar el httpsAgent
   try {
-    const url = `${baseUrl}addProduct`;
+    const url = `${BASE_URL}addProduct`;
     const productsResponse = await POST(url, producto);
     dispatch({
       type: REGISTRAR_PRODUCTO,
@@ -49,7 +49,7 @@ export const SeleccionarProducto = (producto) => (dispatch) => {
 
 export const AgregarExistencias = ({ codigo, cantidad, descripcion }) => async (dispatch) => {
   try {
-    const url = `${baseUrl}addExistenciasProducto`;
+    const url = `${BASE_URL}addExistenciasProducto`;
     const data = { codigo, cantidad, descripcion };
     const existenciasResponse = await PUT(url, data);
     if (existenciasResponse.data.msg === 'OK') {

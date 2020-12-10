@@ -1,19 +1,8 @@
-import axios from 'axios';
 import TODAS_CATEGORIAS from '../types/categoriasTypes';
-
-const https = require('https');
+import { GET, BASE_URL } from './requestsHandler';
 
 export const GetAllCategorias = () => async (dispatch) => {
-  // TODO: Corregir
-  // const categoriesResponse = await axios.get('https://localhost:3010/getCategorias');
-  const url = 'http://localhost:3010/getCategorias';
-  const categoriesResponse = await axios({
-    url,
-    method: 'GET',
-    httpsAgent: new https.Agent({
-      rejectUnauthorized: false,
-    }),
-  });
+  const categoriesResponse = await GET(`${BASE_URL}/getCategorias`);
   try {
     dispatch({
       type: TODAS_CATEGORIAS,

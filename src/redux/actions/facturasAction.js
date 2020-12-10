@@ -2,9 +2,9 @@ import {
   TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
   ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA, PRODUCTOS_NUEVA_FACTURA,
 } from '../types/facturacionTypes';
-import { GET, POST } from './requestsHandler';
+import { GET, POST, BASE_URL } from './requestsHandler';
 
-const baseUrl = 'http://localhost:3010/';
+// const BASE_URL = 'http://localhost:3010/';
 
 const cargando = () => async (dispatch) => dispatch({ type: CARGANDO });
 const dispatchError = (msg) => async (dispatch) => dispatch({ type: ERROR, payload: msg });
@@ -12,7 +12,7 @@ const dispatchError = (msg) => async (dispatch) => dispatch({ type: ERROR, paylo
 export const GetAllFacturas = () => async (dispatch) => {
   dispatch(cargando());
   try {
-    const url = `${baseUrl}getFactura`;
+    const url = `${BASE_URL}getFactura`;
     const facturasResponse = await GET(url);
     dispatch({
       type: TODAS_FACTURAS,
@@ -27,7 +27,7 @@ export const GetAllFacturasHabilitadas = () => async (dispatch) => {
   dispatch(cargando());
 
   try {
-    const url = `${baseUrl}getFacturaHabilitada`;
+    const url = `${BASE_URL}getFacturaHabilitada`;
     const facturasHabilitadasResponse = await GET(url);
     dispatch({
       type: FACTURAS_HABILITADAS,
@@ -42,7 +42,7 @@ export const GetAllFacturasDeshabilitadas = () => async (dispatch) => {
   dispatch(cargando());
 
   try {
-    const url = `${baseUrl}getFacturaAnulada`;
+    const url = `${BASE_URL}getFacturaAnulada`;
     const facturasDeshabilitadasResponse = await GET(url);
     dispatch({
       type: FACTURAS_DESHABILITADAS,
@@ -57,7 +57,7 @@ export const RegistrarFactura = (factura) => async (dispatch) => {
   dispatch(cargando());
 
   try {
-    const url = `${baseUrl}insertFactura`;
+    const url = `${BASE_URL}insertFactura`;
     await POST(url, factura);
     dispatch({
       type: REGISTRAR_FACTURA,
@@ -82,7 +82,7 @@ export const SetFacturasHabilitadas = (habilitar) => async (dispatch) => {
 
 export const GetProductosFactura = (idFactura) => async (dispatch) => {
   try {
-    const url = `${baseUrl}getDetalleFactura`;
+    const url = `${BASE_URL}getDetalleFactura`;
     const response = await POST(url, idFactura);
     dispatch({
       type: PRODUCTOS_FACTURA,

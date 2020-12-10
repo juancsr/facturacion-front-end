@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:3010/';
+// export const BASE_URL = 'http://localhost:3010/';
+export const BASE_URL = 'http://35.193.213.152:3010/';
 
 const https = require('https');
 
