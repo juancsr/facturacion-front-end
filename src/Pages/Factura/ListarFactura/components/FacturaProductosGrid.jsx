@@ -7,6 +7,7 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 
 import { productosPropType } from '../../../../propTypes/productosPropTypes';
+import { CurrencyTypeProvider } from '../../../../components/TableComponent';
 
 const FacturaProductosGrid = ({ productos }) => {
   const [columns] = useState([
@@ -15,9 +16,11 @@ const FacturaProductosGrid = ({ productos }) => {
     { name: 'cantidad', title: 'Cantidad' },
     { name: 'precio', title: 'Precio/U' },
     { name: 'iva', title: 'IVA' },
-    { name: 'valor_iva', title: 'Valor IVA' },
+    { name: 'valor_iva', title: 'Valor IVA/U' },
     { name: 'valor_total_Producto', title: 'Valor de compra' },
   ]);
+
+  const [currencyColumns] = useState(['precio', 'valor_iva', 'valor_total_Producto']);
 
   return (
     <Paper>
@@ -28,6 +31,7 @@ const FacturaProductosGrid = ({ productos }) => {
         })}
         columns={columns}
       >
+        <CurrencyTypeProvider for={currencyColumns} />
         <Table />
         <TableHeaderRow />
       </Grid>
