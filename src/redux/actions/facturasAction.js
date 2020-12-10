@@ -1,6 +1,6 @@
 import {
   TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
-  ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA,
+  ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA, PRODUCTOS_NUEVA_FACTURA,
 } from '../types/facturacionTypes';
 import { GET, POST } from './requestsHandler';
 
@@ -97,5 +97,12 @@ export const AbrirFormularioRegistro = (abierto = true) => async (dispatch) => {
   dispatch({
     type: ABRIR_FORMULARIO_FACTURA,
     payload: abierto,
+  });
+};
+
+export const AgregarProductoACarrito = (producto) => async (dispatch) => {
+  dispatch({
+    type: PRODUCTOS_NUEVA_FACTURA,
+    payload: producto,
   });
 };

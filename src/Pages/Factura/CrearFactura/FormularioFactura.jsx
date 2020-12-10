@@ -31,13 +31,21 @@ import { connect } from 'react-redux';
 import { AbrirFormularioRegistro } from '../../../redux/actions/facturasAction';
 import { GetAllProductos } from '../../../redux/actions/productosAction';
 import { GetAllClientes } from '../../../redux/actions/clientesActions';
-import { productosReducerPropTypes, facturacionReducerPropTypes } from '../../../propTypes/reducersPropTypes';
+import { GetAllVendedores } from '../../../redux/actions/operadoresActions';
+import {
+  facturacionReducerPropTypes, clientesReducerPropTypes,
+  operadoresReducerPropTypes,
+} from '../../../propTypes/reducersPropTypes';
 import SelectCliente from './components/SelectClientes';
+import SelectVendedor from './components/SelectVendedor';
+import CarritoProductos from './components/CarritoProductos';
+import SelectTipoPago from './components/SelectTipoPago';
 
 const useStyles = makeStyles(() => ({
   header: {
-    background: '#f6f6f6',
+    background: '#12A6E0',
     borderBottom: '1px solid #595959',
+    color: 'white',
   },
   dialog: {
     fontSize: '6px !important',
@@ -53,13 +61,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 const FormularioFactura = ({
-  productosReducer, facturasReducer, AbrirFormularioRegistro, GetAllProductos, GetAllClientes,
+  facturasReducer, clientesReducer, operadoresReducer,
+  AbrirFormularioRegistro, GetAllProductos, GetAllClientes, GetAllVendedores,
 }) => {
   useEffect(() => {
     if (facturasReducer.formularioFacturaAbierto) {
       GetAllProductos();
       GetAllClientes();
-      console.log(productosReducer.listaProductos);
+      GetAllVendedores();
     }
   }, [facturasReducer.formularioFacturaAbierto]);
 
@@ -74,6 +83,8 @@ const FormularioFactura = ({
   const [codigo, setCodigo] = useState('');
   const [fechaCompra, setFechaCompra] = useState('');
   const [showMessage, setShowMessage] = useState(false);
+  const [tipoPago, setTipoPago] = useState('EFECTIVO');
+
   // Reset all the input values
   // const resetValues = () => {
   //   setCode('');
@@ -85,15 +96,21 @@ const FormularioFactura = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    /* const data = {
-      codigo: code,
-      nombre: name,
-      descripcion: description,
-      // precio_unidad: price,
-      id_categoria: category.id_categoria,
-    }; */
+    const productos = facturasReducer.productosNuevaFactura.map((producto) => ({
+      // eslint-disable-next-line radix
+      id_producto: producto.id_producto, cantidad: parseInt(producto.cantidad),
+    }));
+    const data = {
+      id_cliente: clientesReducer.clienteSelecionado.id_cliente,
+      id_vendedor: operadoresReducer.vendedorSeleccionado.id_vendedor.toString(),
+      codigo,
+      productos,
+      fechaCompra,
+      tipo_pago: tipoPago,
+    };
+    console.log('data: ', data);
     // setShowMessage(true);
-    AbrirFormularioRegistro(false);
+    // AbrirFormularioRegistro(false);
     // RegistrarProducto(data);
     // resetValues();
   };
@@ -109,7 +126,7 @@ const FormularioFactura = ({
         </Tooltip>
       </div>
       <Dialog fullScreen open={facturasReducer.formularioFacturaAbierto} onClose={handleClose} aria-labelledby="form-dialog-title" className={classes.dialog}>
-        <DialogTitle id="form-dialog-title" className={classes.header}>Registrar nueva factura</DialogTitle>
+        <DialogTitle id="form-dialog-title" className={classes.header}>REGISTRAR NUEVA FACTURA</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <FormHelperText>
@@ -117,10 +134,10 @@ const FormularioFactura = ({
             </FormHelperText>
           </DialogContentText>
           <form>
-            <Grid container spacing={1}>
+            <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Typography variant="h6">
-                  Información de la factura
+                  <b>Información de la Factura</b>
                 </Typography>
                 <br />
               </Grid>
@@ -155,8 +172,24 @@ const FormularioFactura = ({
                   />
                 </MuiPickersUtilsProvider>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <SelectCliente />
+              </Grid>
+              <Grid item xs={6}>
+                <SelectVendedor />
+              </Grid>
+              <Grid item xs={12}>
+                {/* <hr /> */}
+                <Typography variant="h6">
+                  <b>Agregar Productos</b>
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={12}>
+                <CarritoProductos />
+              </Grid>
+              <Grid item xs={12}>
+                <SelectTipoPago tipoPago={tipoPago} setTipoPago={setTipoPago} />
               </Grid>
             </Grid>
           </form>
@@ -205,16 +238,27 @@ const FormularioFactura = ({
 };
 
 FormularioFactura.propTypes = {
-  productosReducer: productosReducerPropTypes.isRequired,
+  // productosReducer: productosReducerPropTypes.isRequired,
   facturasReducer: facturacionReducerPropTypes.isRequired,
+  clientesReducer: clientesReducerPropTypes.isRequired,
+  operadoresReducer: operadoresReducerPropTypes.isRequired,
   AbrirFormularioRegistro: PropTypes.func.isRequired,
   GetAllProductos: PropTypes.func.isRequired,
   GetAllClientes: PropTypes.func.isRequired,
+  GetAllVendedores: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ productosReducer, facturasReducer, clientesReducer }) => (
-  { productosReducer, facturasReducer, clientesReducer });
+const mapStateToProps = ({
+  productosReducer, facturasReducer, clientesReducer, operadoresReducer,
+}) => ({
+  productosReducer, facturasReducer, clientesReducer, operadoresReducer,
+});
 
-const mapDispatchToProps = { AbrirFormularioRegistro, GetAllProductos, GetAllClientes };
+const mapDispatchToProps = {
+  AbrirFormularioRegistro,
+  GetAllProductos,
+  GetAllClientes,
+  GetAllVendedores,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormularioFactura);

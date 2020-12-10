@@ -9,6 +9,12 @@ export const clientesReducerPropTypes = {
   listaClientes: PropTypes.array.isRequired,
 };
 
+export const operadoresReducerPropTypes = {
+  listaOperadores: PropTypes.array.isRequired,
+  listaVendedores: PropTypes.array.isRequired,
+  vendedorSeleccionado: PropTypes.object.isRequired,
+};
+
 export const notificationReducerPropTypes = {
   productosNotf: PropTypes.number,
   facturasNotf: PropTypes.number,
@@ -27,4 +33,6 @@ export const facturacionReducerPropTypes = {
   cargando: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
   productos_factura: PropTypes.array.isRequired,
+  formularioFacturaAbierto: PropTypes.bool.isRequired,
+  productosNuevaFactura: PropTypes.array.isRequired,
 };

@@ -22,9 +22,11 @@ const SelectClientes = ({ clientesReducer, SelecionarCliente }) => {
   const [options, setOptions] = useState([{ value: {}, label: 'Clientes' }]);
   useEffect(() => {
     SelecionarCliente({});
-    setOptions(clientesReducer.listaClientes.map((cliente) => ({
-      value: cliente, label: `${cliente.nombres} ${cliente.apellidos !== '-1' ? `${cliente.apellidos} (C.C. ${cliente.numero_identificacion})` : ''}`,
-    })));
+    if (clientesReducer.listaClientes.length > 0) {
+      setOptions(clientesReducer.listaClientes.map((cliente) => ({
+        value: cliente, label: `${cliente.nombres} ${cliente.apellidos !== '-1' ? `${cliente.apellidos} (C.C. ${cliente.numero_identificacion})` : ''}`,
+      })));
+    }
   }, [clientesReducer.listaClientes]);
 
   const handleChange = (e) => {
@@ -33,18 +35,14 @@ const SelectClientes = ({ clientesReducer, SelecionarCliente }) => {
 
   return (
     <Grid container>
-      <Grid xs={5}>
+      <Grid xs={12}>
         <Typography variant="subtitle1">Cliente *</Typography>
         <Select styles={customStyles} options={options} label="Escriba la cédula del cliente" onChange={handleChange} />
         `
       </Grid>
-      <Grid xs={1}>
-        <span />
-      </Grid>
       <Grid xs={6}>
-        <Typography variant="subtitle1">Información del cliente</Typography>
-        { clientesReducer.clienteSelecionado.nombres === undefined
-          || clientesReducer.clienteSelecionado === null
+        { clientesReducer.clienteSelecionado === null
+          || clientesReducer.clienteSelecionado.nombres === undefined
           ? <></>
           : (
             <div style={{ fontSize: 14 }}>
