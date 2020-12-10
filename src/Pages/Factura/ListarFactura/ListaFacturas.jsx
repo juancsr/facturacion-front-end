@@ -7,12 +7,11 @@ import FilterSelect from './components/FilterSelect';
 import * as facturasActions from '../../../redux/actions/facturasAction';
 import { facturacionReducerPropTypes } from '../../../propTypes/reducersPropTypes';
 
+// eslint-disable-next-line no-unused-vars
 const ListaFactura = ({ facturasReducer, GetAllFacturas }) => {
   const [searchValue, setSearchValue] = useState('');
 
-  // TODO: Use setData
-  // eslint-disable-next-line no-unused-vars
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => GetAllFacturas(), []);
 
@@ -26,9 +25,9 @@ const ListaFactura = ({ facturasReducer, GetAllFacturas }) => {
       <div style={{ textAlign: 'left', marginLeft: 10 }}>
         <FilterSelect />
       </div>
-      {data !== null
-        ? <GridFactura data={data} searchValue={searchValue} setSearchValue={setSearchValue} />
-        : <CircularProgress />}
+      {facturasReducer.cargando
+        ? <CircularProgress />
+        : <GridFactura data={data} searchValue={searchValue} setSearchValue={setSearchValue} />}
     </>
   );
 };

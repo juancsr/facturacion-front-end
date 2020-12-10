@@ -1,11 +1,16 @@
 import {
-  TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS,
+  TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
+  ERROR, PRODUCTOS_FACTURA,
 } from '../types/facturacionTypes';
 import { GET, POST } from './requestsHandler';
 
 const baseUrl = 'http://localhost:3010/';
 
+const cargando = () => async (dispatch) => dispatch({ type: CARGANDO });
+const dispatchError = (msg) => async (dispatch) => dispatch({ type: ERROR, payload: msg });
+
 export const GetAllFacturas = () => async (dispatch) => {
+  dispatch(cargando());
   try {
     const url = `${baseUrl}getFactura`;
     const facturasResponse = await GET(url);
@@ -14,12 +19,13 @@ export const GetAllFacturas = () => async (dispatch) => {
       payload: facturasResponse.data,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('error obteniendo facturas: ', error);
+    dispatch(dispatchError('No pudo filtrar por todas las facturas'));
   }
 };
 
 export const GetAllFacturasHabilitadas = () => async (dispatch) => {
+  dispatch(cargando());
+
   try {
     const url = `${baseUrl}getFacturaHabilitada`;
     const facturasHabilitadasResponse = await GET(url);
@@ -28,12 +34,13 @@ export const GetAllFacturasHabilitadas = () => async (dispatch) => {
       payload: facturasHabilitadasResponse.data,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('error obteniendo facturas: ', error);
+    dispatch(dispatchError('No hay datos de facturas habilitadas'));
   }
 };
 
 export const GetAllFacturasDeshabilitadas = () => async (dispatch) => {
+  dispatch(cargando());
+
   try {
     const url = `${baseUrl}getFacturaAnulada`;
     const facturasDeshabilitadasResponse = await GET(url);
@@ -42,12 +49,13 @@ export const GetAllFacturasDeshabilitadas = () => async (dispatch) => {
       payload: facturasDeshabilitadasResponse.data,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('error obteniendo facturas deshabilitadas: ', error);
+    dispatch(dispatchError('No hay datos de facturas deshabilitadas'));
   }
 };
 
 export const RegistrarFactura = (factura) => async (dispatch) => {
+  dispatch(cargando());
+
   try {
     const url = `${baseUrl}addFactura`;
     const facturaResponse = await POST(url, factura);
@@ -56,8 +64,7 @@ export const RegistrarFactura = (factura) => async (dispatch) => {
       payload: facturaResponse.data,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('error al registrar la factura: ', error);
+    dispatch(dispatchError('No se pudo registrar la factura'));
   }
 };
 
@@ -70,5 +77,22 @@ export const SetFacturasHabilitadas = (habilitar) => async (dispatch) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('error en SetFacturasHabilidatas: ', error);
+  }
+};
+
+export const GetProductosFactura = (idFactura) => async (dispatch) => {
+  // dispatch(cargando());
+
+  try {
+    const url = `${baseUrl}getDetalleFactura`;
+    console.log(idFactura);
+    const response = await POST(url, idFactura);
+    console.log(response);
+    dispatch({
+      type: PRODUCTOS_FACTURA,
+      payload: response.data,
+    });
+  } catch (error) {
+    dispatch(dispatchError('No se pudo obtener el detalle de esta factura'));
   }
 };

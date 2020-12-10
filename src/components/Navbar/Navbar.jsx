@@ -89,12 +89,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = ({ loginReducer, notificationReducer }) => {
+const Navbar = ({ loginReducer = '', notificationReducer }) => {
+  console.log(loginReducer, notificationReducer);
   const { username } = loginReducer;
 
-  const { productosNotf, facturasNotf, userNotf } = notificationReducer;
-
-  console.log({ productosNotf, facturasNotf, userNotf });
+  const { productosNotf, facturasNotf } = notificationReducer;
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -242,4 +241,4 @@ Navbar.propTypes = {
 // eslint-disable-next-line max-len
 const mapStateToProps = ({ loginReducer, notificationReducer }) => ({ loginReducer, notificationReducer });
 
-export default connect(mapStateToProps, {/* Actions */ })(Navbar);
+export default connect(mapStateToProps, null)(Navbar);

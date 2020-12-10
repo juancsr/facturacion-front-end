@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -12,8 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import CallMadeIcon from '@material-ui/icons/CallMade';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
+import CurrencyFormat from 'react-currency-format';
 import FacturaProductosGrid from './FacturaProductosGrid';
 import { productosPropType } from '../../../../propTypes/productosPropTypes';
+import * as factuasAction from '../../../../redux/actions/facturasAction';
+import { facturacionReducerPropTypes } from '../../../../propTypes/reducersPropTypes';
 
 const styles = (theme) => ({
   root: {
@@ -62,8 +66,28 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-const DetailDialog = ({ factura }) => {
-  const [open, setOpen] = React.useState(false);
+const DetailDialog = ({ factura, facturasReducer, GetProductosFactura }) => {
+  const [open, setOpen] = useState(false);
+  const [totalIva, setTotalIva] = useState(0);
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    if (open) {
+      // eslint-disable-next-line camelcase
+      const { id_factura } = factura;
+      GetProductosFactura({ id_factura });
+    }
+  }, [open]);
+
+  useEffect(() => {
+    let auxTotalIva = 0;
+    let auxTotal = 0;
+    facturasReducer.productos_factura.forEach((producto) => {
+      auxTotal += producto.valor_total_Producto;
+      auxTotalIva += producto.valor_iva;
+    });
+    setTotalIva(auxTotalIva.toFixed(2));
+    setTotal(auxTotal.toFixed(2));
+  }, [facturasReducer.productos_factura]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -91,7 +115,8 @@ const DetailDialog = ({ factura }) => {
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           <h4>
-            Detalle de la factura
+            Detalle de la factura:
+            {' '}
             <em>{factura.codigo}</em>
           </h4>
         </DialogTitle>
@@ -112,48 +137,51 @@ const DetailDialog = ({ factura }) => {
                 {factura.estado}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <Typography gutterBottom>
                 <b>Cliente: </b>
                 {' '}
                 {factura.cliente}
               </Typography>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={6}>
               <Typography gutterBottom>
                 <b>Fecha de compra:</b>
                 {' '}
-                {factura.fechaCompra}
+                {factura.fecha_compra}
               </Typography>
             </Grid>
+            <Grid item xs={6}><></></Grid>
             <Grid item xs={4}>
               <Typography gutterBottom>
                 <b>Fecha de registro: </b>
-                {factura.fechaRegistro}
+                {factura.fecha_registro}
               </Typography>
             </Grid>
 
             <Grid item xs={12}>
               <Typography gutterBottom><b>Productos</b></Typography>
               <br />
-              <FacturaProductosGrid productos={factura.productos} />
+              <FacturaProductosGrid productos={facturasReducer.productos_factura} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={4}>
               <Typography gutterBottom>
                 <b>Total IVA: </b>
-                <span>
-                  $
-                  {factura.valorTotal}
-                </span>
               </Typography>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
+              <Typography gutterBottom>
+                <CurrencyFormat value={totalIva} displayType="text" thousandSeparator prefix="$" />
+              </Typography>
+            </Grid>
+            <Grid item xs={4}>
               <Typography gutterBottom>
                 <b>Total Factura (IVA incluido): </b>
-                <span>
-                  $
-                  {factura.valorTotal}
-                </span>
+              </Typography>
+            </Grid>
+            <Grid item xs={8}>
+              <Typography gutterBottom>
+                <CurrencyFormat value={total} displayType="text" thousandSeparator prefix="$" />
               </Typography>
             </Grid>
           </Grid>
@@ -173,15 +201,20 @@ const DetailDialog = ({ factura }) => {
 
 DetailDialog.propTypes = {
   factura: PropTypes.shape({
+    id_factura: PropTypes.number,
     codigo: PropTypes.string,
     vendedor: PropTypes.string,
     estado: PropTypes.string,
     cliente: PropTypes.string,
-    fechaCompra: PropTypes.string,
-    fechaRegistro: PropTypes.string,
+    fecha_compra: PropTypes.string,
+    fecha_registro: PropTypes.string,
     valorTotal: PropTypes.number,
     productos: productosPropType,
   }).isRequired,
+  facturasReducer: facturacionReducerPropTypes.isRequired,
+  GetProductosFactura: PropTypes.func.isRequired,
 };
 
-export default DetailDialog;
+const mapStateToProps = (facturasReducer) => facturasReducer;
+
+export default connect(mapStateToProps, factuasAction)(DetailDialog);

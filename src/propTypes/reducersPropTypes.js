@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { productoPropType } from './productosPropTypes';
 
 export const loginReducerPropTypes = {
-  username: PropTypes.string.isRequired,
+  username: PropTypes.string,
 };
 
 export const notificationReducerPropTypes = {
@@ -20,4 +20,7 @@ export const productosReducerPropTypes = {
 export const facturacionReducerPropTypes = {
   listaFacturas: PropTypes.array.isRequired,
   facturasHabilitadas: PropTypes.bool.isRequired,
+  cargando: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
+  productos_factura: PropTypes.array.isRequired,
 };

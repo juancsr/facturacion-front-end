@@ -1,10 +1,14 @@
 import {
-  TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS,
+  TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
+  ERROR, PRODUCTOS_FACTURA,
 } from '../types/facturacionTypes';
 
 const INITIAL_STATE = {
   listaFacturas: [],
   facturasHabilitadas: true,
+  cargando: false,
+  error: '',
+  productos_factura: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -12,9 +16,21 @@ const reducer = (state = INITIAL_STATE, action) => {
     case TODAS_FACTURAS:
     case FACTURAS_HABILITADAS:
     case FACTURAS_DESHABILITADAS:
-      return { ...state, listaFacturas: action.payload };
+      return {
+        ...state, listaFacturas: action.payload, cargando: false, error: '',
+      };
     case REGISTRAR_FACTURA:
-      return { ...state, listaFacturas: action.payload };
+      return {
+        ...state, listaFacturas: action.payload, cargando: false, error: '',
+      };
+    case PRODUCTOS_FACTURA:
+      return {
+        ...state, productos_factura: action.payload, cargando: false, error: '',
+      };
+    case CARGANDO:
+      return { ...state, cargando: true };
+    case ERROR:
+      return { ...state, payload: action.payload, cargando: false };
     default:
       return state;
   }

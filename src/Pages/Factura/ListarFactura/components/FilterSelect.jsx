@@ -6,9 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import * as facturasActions from '../../../../redux/actions/facturasAction';
 
 const FilterSelect = ({
-  SetFacturasHabilitadas, GetAllFacturas, GetAllFacturasHabilitadas, GetAllFacturasDeshabilitadas,
+  GetAllFacturas, GetAllFacturasHabilitadas, GetAllFacturasDeshabilitadas,
 }) => {
-  const states = ['TODAS', 'HABILITADA', 'ANULADA'];
+  const states = ['TODAS', 'HABILITADAS', 'ANULADAS'];
 
   const [stateFilter, setStateFilter] = useState(states[0]);
 
@@ -17,10 +17,8 @@ const FilterSelect = ({
     const filter = e.target.value;
     if (filter === states[0]) {
       GetAllFacturas();
-      SetFacturasHabilitadas(true);
     } else if (filter === states[1]) {
       GetAllFacturasHabilitadas();
-      SetFacturasHabilitadas(false);
     } else {
       GetAllFacturasDeshabilitadas();
     }
@@ -41,7 +39,7 @@ const FilterSelect = ({
 };
 
 FilterSelect.propTypes = {
-  SetFacturasHabilitadas: PropTypes.func.isRequired,
+  // SetFacturasHabilitadas: PropTypes.func.isRequired,
   GetAllFacturas: PropTypes.func.isRequired,
   GetAllFacturasHabilitadas: PropTypes.func.isRequired,
   GetAllFacturasDeshabilitadas: PropTypes.func.isRequired,

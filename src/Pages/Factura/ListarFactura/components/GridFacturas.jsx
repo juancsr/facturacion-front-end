@@ -22,7 +22,6 @@ import {
 } from '@devexpress/dx-react-grid-material-ui';
 import { TableComponent, CurrencyTypeProvider } from '../../../../components/TableComponent';
 import DetalleDialogPlugin from './grid-plugins/FacturaDetallePlugin';
-import DetailDialog from './FacturaDetalleDialog';
 import { facturasPropType } from '../../../../propTypes/facturaPropTypes';
 
 const GridProductos = ({ data }) => {
@@ -34,9 +33,9 @@ const GridProductos = ({ data }) => {
     { name: 'estado', title: 'Estado' },
     { name: 'fecha_registro', title: 'Fecha de Registro' },
     { name: 'fecha_compra', title: 'Fecha de Compra' },
-    { name: 'valor_total', title: 'Total Productos Comprados' },
+    // { name: 'valor_total', title: 'Total Productos Comprados' },
     // { name: 'valorTotalIVA', title: 'Valor Total IVA' },
-    { name: 'valorTotal', title: 'Valor Total' },
+    { name: 'valor_total', title: 'Total Factura' },
     { name: 'opciones', title: 'Opciones' },
   ]);
 
@@ -61,15 +60,11 @@ const GridProductos = ({ data }) => {
       </IconButton>
     </Tooltip>,
     <Tooltip title="Anular factura">
-      {// eslint-disable-next-line max-len
-      /* <IconButton className="GridButton" variant="contained" size="small" style={{background: '#E0284C'}} > */}
-      <IconButton className="GridButton" size="small" style={{ background: '' }}>
+      <IconButton className="GridButton" variant="contained" size="small">
         <ClearIcon style={{ color: '#E0284C' }} />
       </IconButton>
     </Tooltip>,
   ]);
-
-  // const data =
 
   return (
     <Paper>
@@ -96,15 +91,14 @@ const GridProductos = ({ data }) => {
             <IntegratedSorting />
             <CurrencyTypeProvider for={currencyColumns} />
             <Table tableComponent={TableComponent} />
-            <DetalleDialogPlugin dialogComponent={DetailDialog} />
+            <DetalleDialogPlugin />
             <TableHeaderRow showSortingControls />
             <Toolbar />
             <SearchPanel messages={{ searchPlaceholder: 'Buscar...' }} />
             <PagingPanel messages={{ info: (from) => `Mostrando ${from.from}-${from.to} de ${from.count}` }} />
           </Grid>
         )
-        : <p style={{ textAlign: 'center' }}>No hay datos de facturas</p>}
-
+        : <p style={{ textAlign: 'center' }}>No hay información para mostrar</p>}
     </Paper>
   );
 };

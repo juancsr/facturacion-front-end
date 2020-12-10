@@ -1,15 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Plugin,
   Template,
   Getter,
 } from '@devexpress/dx-react-core';
-
 import { TableHeaderRow, Table } from '@devexpress/dx-react-grid-material-ui';
+// eslint-disable-next-line no-unused-vars
+import FacturaDetalleContainer from '../FacturaDetalleContainer';
+import DetailDialog from '../FacturaDetalleDialog';
 
 const ICON_COLUMN_TYPE = Symbol('icon');
 
+// eslint-disable-next-line no-unused-vars
 const columnsWithIconColumn = ({ tableColumns }) => [
   {
     type: ICON_COLUMN_TYPE,
@@ -19,7 +21,7 @@ const columnsWithIconColumn = ({ tableColumns }) => [
   ...tableColumns,
 ];
 
-const DetalleDialogPlugin = ({ dialogComponent: Dialog }) => (
+const DetalleDialogPlugin = () => (
   <Plugin name="IconColumn" dependencies={[{ name: 'Table' }]}>
     <Getter name="tableColumns" computed={columnsWithIconColumn} />
     <Template
@@ -31,12 +33,14 @@ const DetalleDialogPlugin = ({ dialogComponent: Dialog }) => (
         const {
           tableRow: { row },
         } = params;
-        // const clickHandler = () => ();
+        // changeRow((a) => console.log(a));
+        // const clickHandler = () => console.log('click!');
 
         return (
-          // eslint-disable-next-line react/jsx-props-no-spreading
+        // eslint-disable-next-line react/jsx-props-no-spreading
           <Table.Cell {...params} style={{ padding: 8 }}>
-            <Dialog factura={row} />
+            <DetailDialog factura={row} />
+            {/* <p>{row}</p> */}
           </Table.Cell>
 
         );
@@ -44,10 +48,5 @@ const DetalleDialogPlugin = ({ dialogComponent: Dialog }) => (
     </Template>
   </Plugin>
 );
-
-DetalleDialogPlugin.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  dialogComponent: PropTypes.object.isRequired,
-};
 
 export default DetalleDialogPlugin;

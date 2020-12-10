@@ -15,8 +15,8 @@ const FacturaProductosGrid = ({ productos }) => {
     { name: 'cantidad', title: 'Cantidad' },
     { name: 'precio', title: 'Precio/U' },
     { name: 'iva', title: 'IVA' },
-    { name: 'valorIVA', title: 'Valor IVA' },
-    { name: 'total', title: 'Valor de compra' },
+    { name: 'valor_iva', title: 'Valor IVA' },
+    { name: 'valor_total_Producto', title: 'Valor de compra' },
   ]);
 
   return (
