@@ -1,5 +1,6 @@
 import {
   TODOS_PRODUCTOS, REGISTRAR_PRODUCTO, SELECCIONAR_PRODUCTO, AGREGAR_EXISTENCIAS,
+  ACTUALIZAR_PRODUCTO,
 } from '../types/productosTypes';
 import {
   GET, POST, PUT, BASE_URL,
@@ -61,5 +62,21 @@ export const AgregarExistencias = ({ codigo, cantidad, descripcion }) => async (
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('error agregando existencias: ', error);
+  }
+};
+
+export const ActualizarProducto = (producto) => async (dispatch) => {
+  try {
+    const url = `${BASE_URL}updateProduct`;
+    const productsResponse = await PUT(url, producto);
+    if (productsResponse.data.msg === 'OK') {
+      dispatch({
+        type: ACTUALIZAR_PRODUCTO,
+      });
+      dispatch(GetAllProductos());
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error actualizando el producto', error);
   }
 };

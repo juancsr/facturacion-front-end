@@ -22,6 +22,7 @@ import {
 // import FormularioExistencias from './FormularioExistencias';
 import { TableComponent, CurrencyTypeProvider } from '../../../../components/TableComponent';
 import ExistenciasPlugin from './grid-plugins/ProductoExistenciasPlugin';
+import DetalleDialogPlugin from './grid-plugins/ProductoDetallePlugin';
 import * as productosActions from '../../../../redux/actions/productosAction';
 
 const GridProductos = ({ searchValue, setSearchValue, data }) => {
@@ -67,6 +68,7 @@ const GridProductos = ({ searchValue, setSearchValue, data }) => {
         <IntegratedSorting />
         <CurrencyTypeProvider for={currencyColumns} />
         <Table tableComponent={TableComponent} />
+        <DetalleDialogPlugin />
         <ExistenciasPlugin />
         <TableHeaderRow showSortingControls />
         <Toolbar />
