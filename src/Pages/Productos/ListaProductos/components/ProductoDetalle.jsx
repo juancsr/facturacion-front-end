@@ -16,12 +16,12 @@ import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormControl from '@material-ui/core/FormControl';
 import { connect } from 'react-redux';
 import { GetAllCategorias } from '../../../../redux/actions/categoriasActions';
 import { ActualizarProducto } from '../../../../redux/actions/productosAction';
 import SelectCategorias from './SelectCategorias';
+import { categoriaReducerPropTypes } from '../../../../propTypes/reducersPropTypes';
+import ConfirmMessage from './ConfirmMessage';
 
 const styles = (theme) => ({
   root: {
@@ -73,43 +73,47 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const DetalleDialogPlugin = ({
-  // eslint-disable-next-line no-shadow
-  producto, GetAllCategorias, ActualizarProducto, categoriaReducer,
+  producto, ActualizarProducto, categoriaReducer,
 }) => {
   const [open, setOpen] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
   // info del producto
   const [name, setName] = useState(producto.nombre);
   const [code, setCode] = useState(producto.codigo);
   const [estado, setEstado] = useState(producto.estado);
   const [price, setPrice] = useState(producto.precio_unidad);
-  const [categorias, setCategorias] = useState([]);
+  const [description, setDescription] = useState(producto.descripcion);
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     if (categoriaReducer.categoriaSeleccionada !== undefined
       && categoriaReducer.categoriaSeleccionada !== null) {
-      setTotalPrice((categoriaReducer.categoriaSeleccionada.iva * price) + price);
+      setTotalPrice(((categoriaReducer.categoriaSeleccionada.iva / 100) * price) + price);
     }
-    console.log(categoriaReducer);
-    console.log('categoria seleccionada actualizada');
   }, [categoriaReducer.categoriaSeleccionada]);
 
-  useEffect(() => {
-    GetAllCategorias();
-    setCategorias(categoriaReducer.listaCategorias);
-    console.log(categorias);
-  }, [open]);
-
   const handleClickOpen = () => setOpen(true);
+
   const handleClickClose = () => {
     setOpen(false);
     setIsEditable(false);
   };
+
   const enableEdit = () => setIsEditable(true);
+
   const handleUpdate = () => {
-    const data = {};
+    const data = {
+      id_producto: producto.id_producto,
+      nombre: name,
+      descripcion: description,
+      precio_unidad: price,
+      id_categoria: categoriaReducer.categoriaSeleccionada.id_categoria,
+      codigo: code,
+    };
     ActualizarProducto(data);
+    setConfirmMessage(true);
+    setOpen(false);
     setIsEditable(false);
   };
 
@@ -187,21 +191,40 @@ const DetalleDialogPlugin = ({
             </Grid>
 
             <Grid item xs={6}>
-              <SelectCategorias disabled={!isEditable} />
+              <SelectCategorias disabled={!isEditable} categoriaId={producto.id_categoria} />
             </Grid>
 
             <Grid item xs={6}>
-              <Grid item xs={6}>
-                <p style={{ fontSize: 14 }}>
-                  <small>
-                    {`* IVA:  %${categoriaReducer.categoriaSeleccionada.iva}`}
-                  </small>
-                  <br />
-                  <b>
-                    {`Precio total por unidad:  $${totalPrice}`}
-                  </b>
-                </p>
-              </Grid>
+              {categoriaReducer.categoriaSeleccionada !== null
+                ? (
+                  <Grid item xs={6}>
+                    <p style={{ fontSize: 14 }}>
+                      <small>
+                        {`* IVA:  %${categoriaReducer.categoriaSeleccionada.iva}`}
+                      </small>
+                      <br />
+                      <b>
+                        {`Precio total por unidad:  $${totalPrice}`}
+                      </b>
+                    </p>
+                  </Grid>
+                ) : <></>}
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                id="outlined-multiline-flexible"
+                label="Descripción"
+                placeholder="Descripción del producto"
+                multiline
+                rowsMax={4}
+                style={{ marginTop: 10 }}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                variant="outlined"
+                fullWidth
+                disabled={!isEditable}
+              />
             </Grid>
 
           </Grid>
@@ -223,6 +246,8 @@ const DetalleDialogPlugin = ({
             )}
         </DialogActions>
       </Dialog>
+
+      <ConfirmMessage show={confirmMessage} message="Producto actualizado" />
     </>
   );
 };
@@ -239,10 +264,8 @@ DetalleDialogPlugin.propTypes = {
     estado: PropTypes.string,
     descripcion: PropTypes.string,
   }).isRequired,
-  GetAllCategorias: PropTypes.func.isRequired,
   ActualizarProducto: PropTypes.func.isRequired,
-  // eslint-disable-next-line react/forbid-prop-types
-  categoriaReducer: PropTypes.array.isRequired,
+  categoriaReducer: categoriaReducerPropTypes.isRequired,
 };
 
 const mapDispatchToProps = { GetAllCategorias, ActualizarProducto };

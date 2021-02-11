@@ -10,30 +10,46 @@ import { GetAllCategorias, SeleccionarCategoria } from '../../../../redux/action
 import { categoriaReducerPropTypes } from '../../../../propTypes/reducersPropTypes';
 
 const SelectCategorias = ({
-  disabled, categoriaReducer, GetAllCategorias, SeleccionarCategoria,
+  disabled, categoriaReducer, GetAllCategorias, SeleccionarCategoria, categoriaId,
 }) => {
   const [categorias, setCategorias] = useState(categoriaReducer.listaCategorias);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(categoriaId);
+
+  const findCategoryById = (id) => {
+    const categoriaSeleccionada = categorias.find((categoria) => categoria.id_categoria === id);
+    SeleccionarCategoria(categoriaSeleccionada);
+  };
 
   useEffect(() => {
+    if (categoriaId !== null) {
+      findCategoryById(categoriaId);
+    }
     GetAllCategorias();
     setCategorias(categoriaReducer.listaCategorias);
-  }, [disabled]);
+  }, []);
+
+  const handleChange = (e) => {
+    setSelectedCategoryId(e.target.value);
+    findCategoryById(e.target.value);
+  };
 
   return (
     <FormControl>
       <InputLabel>Categoría</InputLabel>
       <Select
         disabled={disabled}
-        defaultValue="Selecciona una "
-        onChange={(e) => SeleccionarCategoria(e.target.value)}
+        value={selectedCategoryId}
+        onChange={handleChange}
+        displayEmpty
         required
       >
         <MenuItem disabled>
           <em>Selecciona una categoría</em>
         </MenuItem>
         {categorias && categorias.length > 0
-          ? categorias.map((c) => <MenuItem key={c.id} value={c}>{c.nombre}</MenuItem>)
-          : <></>}
+          ? categorias.map((c) => (
+            <MenuItem key={c.id_categoria} value={c.id_categoria}>{c.nombre}</MenuItem>
+          )) : <></>}
       </Select>
       <FormHelperText>La categoría determina el IVA del producto</FormHelperText>
     </FormControl>
@@ -42,6 +58,7 @@ const SelectCategorias = ({
 
 SelectCategorias.defaultProps = {
   disabled: false,
+  categoriaId: null,
 };
 
 SelectCategorias.propTypes = {
@@ -49,6 +66,7 @@ SelectCategorias.propTypes = {
   categoriaReducer: categoriaReducerPropTypes.isRequired,
   GetAllCategorias: PropTypes.func.isRequired,
   SeleccionarCategoria: PropTypes.func.isRequired,
+  categoriaId: PropTypes.number,
 };
 
 const mapStateToProps = (categoriaReducer) => categoriaReducer;
