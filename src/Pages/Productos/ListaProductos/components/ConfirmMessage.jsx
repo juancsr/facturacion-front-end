@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 
-const ConfirmMessage = ({ show, message }) => {
-  const [showMessage, setShowMessage] = useState(show);
+const ConfirmMessage = ({ visible, message, closeMessage }) => {
+  const [showMessage, setShowMessage] = useState(visible);
 
   return (
     <Snackbar
@@ -15,18 +15,17 @@ const ConfirmMessage = ({ show, message }) => {
         horizontal: 'left',
       }}
       open={showMessage}
-      // hidden={showMessage}
       autoHideDuration={6000}
+      onClose={() => setShowMessage(false)}
       message={message}
       action={(
         <>
           <Button color="secondary" size="small">
-            Deshacer
+            {closeMessage}
           </Button>
           <IconButton
             aria-label="close"
             color="inherit"
-            // className={classes.close}
             onClick={() => setShowMessage(false)}
           >
             <CloseIcon />
@@ -37,13 +36,15 @@ const ConfirmMessage = ({ show, message }) => {
   );
 };
 
-// ConfirmMessage.defaultProps = {
-//   hiden: true,
-// };
+ConfirmMessage.defaultProps = {
+  visible: true,
+  closeMessage: 'Deshacer',
+};
 
 ConfirmMessage.propTypes = {
-  show: PropTypes.bool.isRequired,
+  visible: PropTypes.bool,
   message: PropTypes.string.isRequired,
+  closeMessage: PropTypes.string,
 };
 
 export default ConfirmMessage;

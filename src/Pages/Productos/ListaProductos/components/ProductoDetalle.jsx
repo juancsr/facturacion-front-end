@@ -76,8 +76,9 @@ const DetalleDialogPlugin = ({
   producto, ActualizarProducto, categoriaReducer,
 }) => {
   const [open, setOpen] = useState(false);
-  const [confirmMessage, setConfirmMessage] = useState(false);
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false);
   const [isEditable, setIsEditable] = useState(false);
+
   // info del producto
   const [name, setName] = useState(producto.nombre);
   const [code, setCode] = useState(producto.codigo);
@@ -112,7 +113,7 @@ const DetalleDialogPlugin = ({
       codigo: code,
     };
     ActualizarProducto(data);
-    setConfirmMessage(true);
+    setShowConfirmMessage(true);
     setOpen(false);
     setIsEditable(false);
   };
@@ -246,8 +247,10 @@ const DetalleDialogPlugin = ({
             )}
         </DialogActions>
       </Dialog>
-
-      <ConfirmMessage show={confirmMessage} message="Producto actualizado" />
+      {/* TODO: Sacarlo de aqui para que se muestre en la página de "ListaProductos" */}
+      { showConfirmMessage === true ? (
+        <ConfirmMessage visible message="Producto actualizado" />
+      ) : <></> }
     </>
   );
 };
