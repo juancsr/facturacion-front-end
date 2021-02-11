@@ -18,8 +18,6 @@ import {
   TableHeaderRow,
   PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
-
-// import FormularioExistencias from './FormularioExistencias';
 import { TableComponent, CurrencyTypeProvider } from '../../../../components/TableComponent';
 import ExistenciasPlugin from './grid-plugins/ProductoExistenciasPlugin';
 import DetalleDialogPlugin from './grid-plugins/ProductoDetallePlugin';
@@ -46,7 +44,6 @@ const GridProductos = ({ searchValue, setSearchValue, data }) => {
 
   return (
     <Paper>
-      {/* <ExistenciasForm open={openExistenciasForm} setOpen={setOpenExistenciasForm} /> */}
       <Grid
         rows={data}
         columns={columns}

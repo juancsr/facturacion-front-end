@@ -5,9 +5,8 @@ import {
 import {
   GET, POST, PUT, BASE_URL,
 } from './requestsHandler';
-// const BASE_URL = 'http://localhost:3010/';
+
 export const GetAllProductos = () => async (dispatch) => {
-  // TODO: Corregir para evitar el httpsAgent
   try {
     const url = `${BASE_URL}getProducts`;
     const productsResponse = await GET(url);
@@ -22,7 +21,6 @@ export const GetAllProductos = () => async (dispatch) => {
 };
 
 export const RegistrarProducto = (producto) => async (dispatch) => {
-  // TODO: Corregir para evitar el httpsAgent
   try {
     const url = `${BASE_URL}addProduct`;
     const productsResponse = await POST(url, producto);

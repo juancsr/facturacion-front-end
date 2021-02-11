@@ -42,7 +42,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-// eslint-disable-next-line no-shadow
 // eslint-disable-next-line react/prop-types
 const Formulario = ({
   // eslint-disable-next-line react/prop-types
