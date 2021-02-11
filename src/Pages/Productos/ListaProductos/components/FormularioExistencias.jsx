@@ -74,7 +74,7 @@ const FormularioExistencias = ({ producto, AgregarExistencias }) => {
           <AddShoppingCartIcon style={{ color: '#000' }} />
         </Button>
       </Tooltip>
-      ,
+
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" className={classes.dialog}>
         <DialogTitle id="form-dialog-title" className={classes.header}>{`Registrar existencias: ${producto.nombre}`}</DialogTitle>
         <DialogContent>

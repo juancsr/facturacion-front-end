@@ -19,7 +19,7 @@ import {
   PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
 import { TableComponent, CurrencyTypeProvider } from '../../../../components/TableComponent';
-import ExistenciasPlugin from './grid-plugins/ProductoExistenciasPlugin';
+import OpcionesPlugin from './grid-plugins/OptionsPlugin/OpcionesPlugin';
 import DetalleDialogPlugin from './grid-plugins/ProductoDetallePlugin';
 import * as productosActions from '../../../../redux/actions/productosAction';
 
@@ -66,7 +66,7 @@ const GridProductos = ({ searchValue, setSearchValue, data }) => {
         <CurrencyTypeProvider for={currencyColumns} />
         <Table tableComponent={TableComponent} />
         <DetalleDialogPlugin />
-        <ExistenciasPlugin />
+        <OpcionesPlugin />
         <TableHeaderRow showSortingControls />
         <Toolbar />
         <SearchPanel messages={{ searchPlaceholder: 'Buscar...' }} />

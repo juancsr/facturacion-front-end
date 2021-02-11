@@ -7,17 +7,16 @@ import {
 } from '@devexpress/dx-react-core';
 
 import { TableHeaderRow, Table } from '@devexpress/dx-react-grid-material-ui';
-import FormularioExistencias from '../FormularioExistencias';
+import FormularioExistencias from '../../FormularioExistencias';
+import DialogDeshabilitar from './components/DialogDeshabilitar';
 
 const ICON_COLUMN_TYPE = Symbol('icon');
 
 const columnsWithIconColumn = ({ tableColumns }) => [
   ...tableColumns,
   {
-    column: { name: 'opciones', title: 'Opciones' },
     type: ICON_COLUMN_TYPE,
     key: ICON_COLUMN_TYPE.toString(),
-    width: '70px',
   },
 ];
 
@@ -36,8 +35,9 @@ const ExistenciasPlugin = () => (
 
         return (
           // eslint-disable-next-line react/jsx-props-no-spreading
-          <Table.Cell {...params} style={{ padding: 8 }}>
+          <Table.Cell {...params} style={{ padding: 2 }}>
             <FormularioExistencias producto={row} />
+            <DialogDeshabilitar producto={row} />
           </Table.Cell>
 
         );

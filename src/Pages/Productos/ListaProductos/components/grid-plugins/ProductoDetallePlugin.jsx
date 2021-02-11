@@ -14,7 +14,7 @@ const columnsWithIconColumn = ({ tableColumns }) => [
   {
     type: ICON_COLUMN_TYPE,
     key: ICON_COLUMN_TYPE.toString(),
-    width: '70px',
+    width: '50px',
   },
   ...tableColumns,
 ];
