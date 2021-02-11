@@ -1,4 +1,4 @@
-import TODAS_CATEGORIAS from '../types/categoriasTypes';
+import { TODAS_CATEGORIAS, SELECCIONAR_CATEGORIA } from '../types/categoriasTypes';
 import { GET, BASE_URL } from './requestsHandler';
 
 export const GetAllCategorias = () => async (dispatch) => {
@@ -14,3 +14,14 @@ export const GetAllCategorias = () => async (dispatch) => {
 };
 
 export const RegistrarCategoria = () => 'welcome';
+
+export const SeleccionarCategoria = (categoria) => async (dispatch) => {
+  try {
+    dispatch({
+      type: SELECCIONAR_CATEGORIA,
+      payload: categoria,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

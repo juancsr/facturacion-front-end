@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { productoPropType } from './productosPropTypes';
+import categoriaPropTypes from './categoriaPropTypes';
 
 export const loginReducerPropTypes = {
   username: PropTypes.string,
@@ -35,4 +36,10 @@ export const facturacionReducerPropTypes = {
   productos_factura: PropTypes.array.isRequired,
   formularioFacturaAbierto: PropTypes.bool.isRequired,
   productosNuevaFactura: PropTypes.array.isRequired,
+};
+
+export const categoriaReducerPropTypes = {
+  listaCategorias: PropTypes.array.isRequired,
+  agregarCategoria: categoriaPropTypes,
+  categoriaSeleccionada: categoriaPropTypes,
 };

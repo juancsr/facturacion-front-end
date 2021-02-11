@@ -16,11 +16,12 @@ import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormControl from '@material-ui/core/FormControl';
 import { connect } from 'react-redux';
 import { GetAllCategorias } from '../../../../redux/actions/categoriasActions';
 import { ActualizarProducto } from '../../../../redux/actions/productosAction';
+import SelectCategorias from './SelectCategorias';
 
 const styles = (theme) => ({
   root: {
@@ -83,8 +84,16 @@ const DetalleDialogPlugin = ({
   const [estado, setEstado] = useState(producto.estado);
   const [price, setPrice] = useState(producto.precio_unidad);
   const [categorias, setCategorias] = useState([]);
-  // const states = ['Activo', 'Deshabilitado'];
-  console.log(producto);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (categoriaReducer.categoriaSeleccionada !== undefined
+      && categoriaReducer.categoriaSeleccionada !== null) {
+      setTotalPrice((categoriaReducer.categoriaSeleccionada.iva * price) + price);
+    }
+    console.log(categoriaReducer);
+    console.log('categoria seleccionada actualizada');
+  }, [categoriaReducer.categoriaSeleccionada]);
 
   useEffect(() => {
     GetAllCategorias();
@@ -120,7 +129,7 @@ const DetalleDialogPlugin = ({
       >
 
         <DialogTitle onClose={handleClickClose}>
-          <h4>{producto.nombre}</h4>
+          <h4>{name}</h4>
           <>{open}</>
         </DialogTitle>
         <DialogContent>
@@ -178,23 +187,23 @@ const DetalleDialogPlugin = ({
             </Grid>
 
             <Grid item xs={6}>
-              <FormControl>
-                <InputLabel>Categoría</InputLabel>
-                <Select
-                  defaultValue="Selecciona una "
-                  onChange={(e) => setCategorias(e.target.value)}
-                  required
-                >
-                  <MenuItem disabled>
-                    <em>Selecciona una categoría</em>
-                  </MenuItem>
-                  {categorias && categorias.length > 0
-                    ? categorias.map((c) => <MenuItem key={c.id} value={c}>{c.nombre}</MenuItem>)
-                    : <></>}
-                </Select>
-                <FormHelperText>La categoría determina el IVA del producto</FormHelperText>
-              </FormControl>
+              <SelectCategorias disabled={!isEditable} />
             </Grid>
+
+            <Grid item xs={6}>
+              <Grid item xs={6}>
+                <p style={{ fontSize: 14 }}>
+                  <small>
+                    {`* IVA:  %${categoriaReducer.categoriaSeleccionada.iva}`}
+                  </small>
+                  <br />
+                  <b>
+                    {`Precio total por unidad:  $${totalPrice}`}
+                  </b>
+                </p>
+              </Grid>
+            </Grid>
+
           </Grid>
         </DialogContent>
         <DialogActions>
@@ -237,6 +246,6 @@ DetalleDialogPlugin.propTypes = {
 };
 
 const mapDispatchToProps = { GetAllCategorias, ActualizarProducto };
-const mapStateToProps = (categoriaReducer) => ({ categoriaReducer });
+const mapStateToProps = ({ categoriaReducer }) => ({ categoriaReducer });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetalleDialogPlugin);
