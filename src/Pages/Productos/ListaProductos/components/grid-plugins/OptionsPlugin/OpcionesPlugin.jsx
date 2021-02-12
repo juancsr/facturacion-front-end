@@ -5,7 +5,7 @@ import {
   Template,
   Getter,
 } from '@devexpress/dx-react-core';
-
+import Grid from '@material-ui/core/Grid';
 import { TableHeaderRow, Table } from '@devexpress/dx-react-grid-material-ui';
 import FormularioExistencias from '../../FormularioExistencias';
 import DialogDeshabilitar from './components/DialogDeshabilitar';
@@ -26,7 +26,7 @@ const ExistenciasPlugin = () => (
     <Template
       name="tableCell"
       predicate={({ tableColumn, tableRow }) => tableColumn.type === ICON_COLUMN_TYPE
-      && tableRow.type !== TableHeaderRow.ROW_TYPE}
+        && tableRow.type !== TableHeaderRow.ROW_TYPE}
     >
       {(params) => {
         const {
@@ -36,10 +36,15 @@ const ExistenciasPlugin = () => (
         return (
           // eslint-disable-next-line react/jsx-props-no-spreading
           <Table.Cell {...params} style={{ padding: 2 }}>
-            <FormularioExistencias producto={row} />
-            <DialogDeshabilitar producto={row} />
+            <Grid container>
+              <Grid item>
+                <FormularioExistencias producto={row} />
+              </Grid>
+              <Grid item>
+                <DialogDeshabilitar producto={row} />
+              </Grid>
+            </Grid>
           </Table.Cell>
-
         );
       }}
     </Template>

@@ -78,3 +78,21 @@ export const ActualizarProducto = (producto) => async (dispatch) => {
     console.error('error actualizando el producto', error);
   }
 };
+
+export const DeshabilitarProducto = (producto) => async (dispatch) => {
+  try {
+    const url = `${BASE_URL}updateProduct`;
+    producto['']
+    const productsResponse = await PUT(url, producto);
+    if (productsResponse.data.msg === 'OK') {
+      dispatch({
+        type: ACTUALIZAR_PRODUCTO,
+      });
+      dispatch(GetAllProductos());
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error actualizando el producto', error);
+  }
+};
+
