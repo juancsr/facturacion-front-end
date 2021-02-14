@@ -26,7 +26,7 @@ const ListaProductos = ({ productosReducer, GetAllProductos }) => {
       </div>
       <div className="Container">
         <CrearProducto />
-        {data.length > 0
+        {data !== undefined && data.length > 0
           ? <GridProductos searchValue={searchValue} setSearchValue={setSearchValue} data={data} />
           : <CircularProgress />}
       </div>

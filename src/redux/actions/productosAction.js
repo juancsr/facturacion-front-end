@@ -1,6 +1,7 @@
+/* eslint-disable */
 import {
   TODOS_PRODUCTOS, REGISTRAR_PRODUCTO, SELECCIONAR_PRODUCTO, AGREGAR_EXISTENCIAS,
-  ACTUALIZAR_PRODUCTO,
+  ACTUALIZAR_PRODUCTO, DESHABILITAR_PRODUCTO, HABILITAR_PRODUCTO,
 } from '../types/productosTypes';
 import {
   GET, POST, PUT, BASE_URL,
@@ -66,8 +67,9 @@ export const AgregarExistencias = ({ codigo, cantidad, descripcion }) => async (
 export const ActualizarProducto = (producto) => async (dispatch) => {
   try {
     const url = `${BASE_URL}updateProduct`;
-    const productsResponse = await PUT(url, producto);
-    if (productsResponse.data.msg === 'OK') {
+    const response = await PUT(url, producto);
+    console.log(response);
+    if (response.status === 200) {
       dispatch({
         type: ACTUALIZAR_PRODUCTO,
       });
@@ -79,20 +81,40 @@ export const ActualizarProducto = (producto) => async (dispatch) => {
   }
 };
 
-export const DeshabilitarProducto = (producto) => async (dispatch) => {
+export const DeshabilitarProducto = (id_producto) => async (dispatch) => {
   try {
-    const url = `${BASE_URL}updateProduct`;
-    producto['']
-    const productsResponse = await PUT(url, producto);
-    if (productsResponse.data.msg === 'OK') {
+    const url = `${BASE_URL}deshabilitarProducto`;
+    const data = {
+      "id_producto": id_producto,
+    };
+    const response = await PUT(url, data);
+    if (response.data.message === 'ok') {
       dispatch({
-        type: ACTUALIZAR_PRODUCTO,
+        type: DESHABILITAR_PRODUCTO,
       });
       dispatch(GetAllProductos());
     }
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('error actualizando el producto', error);
+    console.error('error deshabilitando el producto', error);
   }
 };
 
+export const HabilitarProducto = (id_producto) => async (dispatch) => {
+  try {
+    const url = `${BASE_URL}habilitarProducto`;
+    const data = {
+      "id_producto": id_producto,
+    };
+    const response = await PUT(url, data);
+    if (response.data.message === 'ok') {
+      dispatch({
+        type: HABILITAR_PRODUCTO,
+      });
+      dispatch(GetAllProductos());
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error deshabilitando el producto', error);
+  }
+};

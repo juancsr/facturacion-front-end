@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { TableHeaderRow, Table } from '@devexpress/dx-react-grid-material-ui';
 import FormularioExistencias from '../../FormularioExistencias';
 import DialogDeshabilitar from './components/DialogDeshabilitar';
+import DialogHabilitar from './components/DialogHabilitar';
 
 const ICON_COLUMN_TYPE = Symbol('icon');
 
@@ -40,9 +41,15 @@ const ExistenciasPlugin = () => (
               <Grid item>
                 <FormularioExistencias producto={row} />
               </Grid>
-              <Grid item>
-                <DialogDeshabilitar producto={row} />
-              </Grid>
+              {row.estado !== 'Activo' ? (
+                <Grid item>
+                  <DialogHabilitar producto={row} />
+                </Grid>
+              ) : (
+                <Grid item>
+                  <DialogDeshabilitar producto={row} />
+                </Grid>
+              )}
             </Grid>
           </Table.Cell>
         );

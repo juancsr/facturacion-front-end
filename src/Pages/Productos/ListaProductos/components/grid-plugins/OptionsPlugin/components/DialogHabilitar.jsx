@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import { makeStyles } from '@material-ui/core/styles';
-import ClearIcon from '@material-ui/icons/Clear';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import { productoPropType } from '../../../../../../../propTypes/productosPropTypes';
@@ -17,7 +17,7 @@ import * as productosActions from '../../../../../../../redux/actions/productosA
 
 const useStyles = makeStyles(() => ({
   header: {
-    background: '#FFB6C1',
+    background: '#DEB887',
     borderBottom: '1px solid #595959',
   },
   dialog: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const DialogDeshabilitar = ({ producto, DeshabilitarProducto }) => {
+const DialogHabilitar = ({ producto, HabilitarProducto }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -46,26 +46,26 @@ const DialogDeshabilitar = ({ producto, DeshabilitarProducto }) => {
 
   const handleSubmit = () => {
     const { id_producto } = producto;
-    DeshabilitarProducto(id_producto);
+    HabilitarProducto(id_producto);
     setOpen(false);
   };
 
   return (
     <div>
-      <Tooltip title="Deshabilitar producto">
+      <Tooltip title="Habilitar producto">
         <Button
           className="GridButton"
           variant="contained"
           size="small"
           onClick={handleClickOpen}
-          style={{ background: '#FFB6C1' }}
+          style={{ background: '#DEB887' }}
         >
-          <ClearIcon style={{ color: '#000' }} />
+          <CheckCircleIcon style={{ color: '#000' }} />
         </Button>
       </Tooltip>
 
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" className={classes.dialog}>
-        <DialogTitle id="form-dialog-title" className={classes.header}>{`Deshabilitar producto: ${producto.nombre}`}</DialogTitle>
+        <DialogTitle id="form-dialog-title" className={classes.header}>{`Habilitar producto: ${producto.nombre}`}</DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>
 
@@ -81,8 +81,8 @@ const DialogDeshabilitar = ({ producto, DeshabilitarProducto }) => {
           <Button variant="outlined" onClick={handleClose} color="primary">
             Cancelar
           </Button>
-          <Button variant="contained" style={{ backgroundColor: "#FFB6C1" }} onClick={handleSubmit}>
-            Deshabilitar
+          <Button variant="contained" style={{ backgroundColor: "#DEB887" }} onClick={handleSubmit}>
+            Habilitar
           </Button>
         </DialogActions>
       </Dialog>
@@ -90,9 +90,9 @@ const DialogDeshabilitar = ({ producto, DeshabilitarProducto }) => {
   );
 };
 
-DialogDeshabilitar.propTypes = {
+DialogHabilitar.propTypes = {
   producto: productoPropType.isRequired,
-  DeshabilitarProducto: PropTypes.func.isRequired,
+  HabilitarProducto: PropTypes.func.isRequired,
 };
 
-export default connect(null, productosActions)(DialogDeshabilitar);
+export default connect(null, productosActions)(DialogHabilitar);

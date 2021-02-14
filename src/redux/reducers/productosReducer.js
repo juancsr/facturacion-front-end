@@ -1,6 +1,6 @@
 import {
   TODOS_PRODUCTOS, REGISTRAR_PRODUCTO, SELECCIONAR_PRODUCTO, AGREGAR_EXISTENCIAS,
-  ACTUALIZAR_PRODUCTO,
+  ACTUALIZAR_PRODUCTO, DESHABILITAR_PRODUCTO, HABILITAR_PRODUCTO,
 } from '../types/productosTypes';
 
 const INITIAL_STATE = {
@@ -18,6 +18,10 @@ const reducer = (state = INITIAL_STATE, action) => {
     case ACTUALIZAR_PRODUCTO:
       return { ...state, listaProductos: action.payload };
     case SELECCIONAR_PRODUCTO:
+      return { ...state, productoSeleccionado: action.payload };
+    case HABILITAR_PRODUCTO:
+      return { ...state, productoSeleccionado: action.payload };
+    case DESHABILITAR_PRODUCTO:
       return { ...state, productoSeleccionado: action.payload };
     case AGREGAR_EXISTENCIAS:
       return state;
