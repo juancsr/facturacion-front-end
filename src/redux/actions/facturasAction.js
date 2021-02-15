@@ -1,10 +1,10 @@
 import {
   TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
-  ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA, PRODUCTOS_NUEVA_FACTURA,
+  ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA, PRODUCTOS_NUEVA_FACTURA, DESCARGAR_FACTURA,
 } from '../types/facturacionTypes';
-import { GET, POST, BASE_URL } from './requestsHandler';
-
-// const BASE_URL = 'http://localhost:3010/';
+import {
+  GET, POST, POST_FILE_DOWNLOAD, BASE_URL,
+} from './requestsHandler';
 
 const cargando = () => async (dispatch) => dispatch({ type: CARGANDO });
 const dispatchError = (msg) => async (dispatch) => dispatch({ type: ERROR, payload: msg });
@@ -105,4 +105,18 @@ export const AgregarProductoACarrito = (producto) => async (dispatch) => {
     type: PRODUCTOS_NUEVA_FACTURA,
     payload: producto,
   });
+};
+
+export const DescargarFactura = (idFactura) => async (dispatch) => {
+  dispatch(cargando());
+  try {
+    const url = `${BASE_URL}FacturaPDF`;
+    const data = { id_factura: idFactura };
+    await POST_FILE_DOWNLOAD(url, data);
+    dispatch({
+      type: DESCARGAR_FACTURA,
+    });
+  } catch (error) {
+    dispatch(dispatchError('No se pudo obtener el detalle de esta factura'));
+  }
 };

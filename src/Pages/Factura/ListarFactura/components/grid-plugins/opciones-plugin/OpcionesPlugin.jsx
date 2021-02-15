@@ -5,23 +5,21 @@ import {
   Getter,
 } from '@devexpress/dx-react-core';
 import { TableHeaderRow, Table } from '@devexpress/dx-react-grid-material-ui';
-// eslint-disable-next-line no-unused-vars
-import FacturaDetalleContainer from '../FacturaDetalleContainer';
-import DetailDialog from '../FacturaDetalleDialog';
+import BtnDescargarFactura from './components/descargar-factura/BtnDescargarFactura';
+import DeshabilitarFactura from './components/deshabilitar-factura/DeshabilitarFactura';
 
 const ICON_COLUMN_TYPE = Symbol('icon');
 
 // eslint-disable-next-line no-unused-vars
 const columnsWithIconColumn = ({ tableColumns }) => [
+  ...tableColumns,
   {
     type: ICON_COLUMN_TYPE,
     key: ICON_COLUMN_TYPE.toString(),
-    width: '70px',
   },
-  ...tableColumns,
 ];
 
-const DetalleDialogPlugin = () => (
+const OpcionesPlugin = () => (
   <Plugin name="IconColumn" dependencies={[{ name: 'Table' }]}>
     <Getter name="tableColumns" computed={columnsWithIconColumn} />
     <Template
@@ -39,8 +37,8 @@ const DetalleDialogPlugin = () => (
         return (
         // eslint-disable-next-line react/jsx-props-no-spreading
           <Table.Cell {...params} style={{ padding: 8 }}>
-            <DetailDialog factura={row} />
-            {/* <p>{row}</p> */}
+            <BtnDescargarFactura idFactura={row.id_factura} />
+            <DeshabilitarFactura idFactura={row.id_factura} />
           </Table.Cell>
 
         );
@@ -49,4 +47,4 @@ const DetalleDialogPlugin = () => (
   </Plugin>
 );
 
-export default DetalleDialogPlugin;
+export default OpcionesPlugin;

@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as facturasActions from '../../../../redux/actions/facturasAction';
+import * as facturasActions from '../../../../../../../../redux/actions/facturasAction';
 import DetailDialog from './FacturaDetalleDialog';
-import { facturaPropType } from '../../../../propTypes/facturaPropTypes';
-import { facturacionReducerPropTypes } from '../../../../propTypes/reducersPropTypes';
+import { facturaPropType } from '../../../../../../../../propTypes/facturaPropTypes';
+import { facturacionReducerPropTypes } from '../../../../../../../../propTypes/reducersPropTypes';
 
 const FacturaDetalleContainer = ({
   // eslint-disable-next-line no-unused-vars

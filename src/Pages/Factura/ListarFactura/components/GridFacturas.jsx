@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import ClearIcon from '@material-ui/icons/Clear';
-import Tooltip from '@material-ui/core/Tooltip';
-import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import {
   SearchState,
   IntegratedFiltering,
@@ -21,7 +17,8 @@ import {
   PagingPanel,
 } from '@devexpress/dx-react-grid-material-ui';
 import { TableComponent, CurrencyTypeProvider } from '../../../../components/TableComponent';
-import DetalleDialogPlugin from './grid-plugins/FacturaDetallePlugin';
+import DetallesPlugin from './grid-plugins/detalle-plugin/DetallesPlugin';
+import OpcionesPlugin from './grid-plugins/opciones-plugin/OpcionesPlugin';
 import { facturasPropType } from '../../../../propTypes/facturaPropTypes';
 
 const GridProductos = ({ data }) => {
@@ -33,10 +30,7 @@ const GridProductos = ({ data }) => {
     { name: 'estado', title: 'Estado' },
     { name: 'fecha_registro', title: 'Fecha de Registro' },
     { name: 'fecha_compra', title: 'Fecha de Compra' },
-    // { name: 'valor_total', title: 'Total Productos Comprados' },
-    // { name: 'valorTotalIVA', title: 'Valor Total IVA' },
     { name: 'valor_total', title: 'Total Factura' },
-    { name: 'opciones', title: 'Opciones' },
   ]);
 
   const [currencyColumns] = useState(['valor_total']);
@@ -51,27 +45,12 @@ const GridProductos = ({ data }) => {
     { columnName: 'valorTotal', direction: 'asc' },
   ]);
 
-  const opciones = ([
-    <Tooltip title="Descargar factura">
-      {// eslint-disable-next-line max-len
-      /* <IconButton className="GridButton" size="small" color="primary" style={{background: '#12A6E0'}}> */}
-      <IconButton className="GridButton" size="small">
-        <SaveAltIcon style={{ color: '#12A6E0' }} />
-      </IconButton>
-    </Tooltip>,
-    <Tooltip title="Anular factura">
-      <IconButton className="GridButton" variant="contained" size="small">
-        <ClearIcon style={{ color: '#E0284C' }} />
-      </IconButton>
-    </Tooltip>,
-  ]);
-
   return (
     <Paper>
       {data.length > 0
         ? (
           <Grid
-            rows={data.map((element) => ({ ...element, opciones }))}
+            rows={data}
             columns={columns}
           >
             <PagingState
@@ -91,7 +70,8 @@ const GridProductos = ({ data }) => {
             <IntegratedSorting />
             <CurrencyTypeProvider for={currencyColumns} />
             <Table tableComponent={TableComponent} />
-            <DetalleDialogPlugin />
+            <DetallesPlugin />
+            <OpcionesPlugin />
             <TableHeaderRow showSortingControls />
             <Toolbar />
             <SearchPanel messages={{ searchPlaceholder: 'Buscar...' }} />

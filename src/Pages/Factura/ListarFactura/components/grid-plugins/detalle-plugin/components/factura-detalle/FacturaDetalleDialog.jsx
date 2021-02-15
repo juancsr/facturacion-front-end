@@ -14,10 +14,10 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
 import Tooltip from '@material-ui/core/Tooltip';
 import Grid from '@material-ui/core/Grid';
 import CurrencyFormat from 'react-currency-format';
-import FacturaProductosGrid from './FacturaProductosGrid';
-import { productosPropType } from '../../../../propTypes/productosPropTypes';
-import * as factuasAction from '../../../../redux/actions/facturasAction';
-import { facturacionReducerPropTypes } from '../../../../propTypes/reducersPropTypes';
+import FacturaProductosGrid from '../grid-productos/FacturaProductosGrid';
+import { productosPropType } from '../../../../../../../../propTypes/productosPropTypes';
+import * as factuasAction from '../../../../../../../../redux/actions/facturasAction';
+import { facturacionReducerPropTypes } from '../../../../../../../../propTypes/reducersPropTypes';
 
 const styles = (theme) => ({
   root: {

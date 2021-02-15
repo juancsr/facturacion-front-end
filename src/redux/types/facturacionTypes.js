@@ -7,3 +7,4 @@ export const ERROR = 'error';
 export const PRODUCTOS_FACTURA = 'productos_factura';
 export const ABRIR_FORMULARIO_FACTURA = 'abrir_formulario_factura';
 export const PRODUCTOS_NUEVA_FACTURA = 'productos_nueva_factura';
+export const DESCARGAR_FACTURA = 'descargar_factura';

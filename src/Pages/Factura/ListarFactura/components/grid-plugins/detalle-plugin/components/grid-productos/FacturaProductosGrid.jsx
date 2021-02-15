@@ -6,8 +6,8 @@ import {
   TableHeaderRow,
 } from '@devexpress/dx-react-grid-material-ui';
 
-import { productosPropType } from '../../../../propTypes/productosPropTypes';
-import { CurrencyTypeProvider } from '../../../../components/TableComponent';
+import { productosPropType } from '../../../../../../../../propTypes/productosPropTypes';
+import { CurrencyTypeProvider } from '../../../../../../../../components/TableComponent';
 
 const FacturaProductosGrid = ({ productos }) => {
   const [columns] = useState([
