@@ -16,6 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 // import MailIcon from '@material-ui/icons/Mail';
 import PostAdd from '@material-ui/icons/PostAdd';
 import ListAlt from '@material-ui/icons/ListAlt';
+import Mail from '@material-ui/icons/Mail';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -147,7 +148,7 @@ const Navbar = ({ loginReducer = '', notificationReducer }) => {
       </NavLink>
     ),
     (
-    /* Lista facturas */
+      /* Lista facturas */
       <NavLink to="/facturas" className="navLinkElement" activeClassName="navElementActive">
         <Button aria-label="show 17 new notifications" color="inherit">
           <Badge badgeContent={facturasNotf} color="secondary">
@@ -158,7 +159,7 @@ const Navbar = ({ loginReducer = '', notificationReducer }) => {
       </NavLink>
     ),
     (
-    /* Crear factura */
+      /* Crear factura */
       <NavLink to="/facturas" className="navLinkElement">
         <Button aria-label="show 4 new mails" color="inherit">
           <PostAdd />
@@ -167,7 +168,16 @@ const Navbar = ({ loginReducer = '', notificationReducer }) => {
       </NavLink>
     ),
     (
-    /* Username */
+      /* Crear factura */
+      <NavLink to="/promociones" className="navLinkElement">
+        <Button aria-label="show 4 new mails" color="inherit">
+          <Mail />
+          <span>Promociones</span>
+        </Button>
+      </NavLink>
+    ),
+    (
+      /* Username */
       <IconButton
         edge="end"
         aria-label="account of current user"
