@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './App.css';
 import { Route } from 'react-router-dom';
@@ -9,12 +10,25 @@ import ListaFacturas from './Pages/Factura/ListarFactura/ListaFacturas';
 import ListaProductos from './Pages/Productos/ListaProductos/ListaProductos';
 import Promociones from './Pages/Promociones/index';
 import Login from './Pages/Login/login';
+import { CheckActiveSession } from './redux/actions/loginActions';
 
-function App(loginReducer) {
-  console.log('reducer: ', loginReducer);
+function App({ loginReducer, CheckActiveSession }) {
+  const [isSessionActive, setSessionActive] = useState(false);
+
+  useEffect(() => {
+    CheckActiveSession();
+  }, []);
+
+  useEffect(() => {
+    if (loginReducer.activeSession) {
+      console.log('updating isSessionActive...');
+      setSessionActive(true);
+    }
+  }, [loginReducer.activeSession]);
+
   return (
     <>
-      {loginReducer.activeSession
+      {isSessionActive
         ? (
           <>
             <Navbar />
@@ -30,7 +44,7 @@ function App(loginReducer) {
           </>
         ) : (
           <>
-            {loginReducer.activeSession === true ? 'sesión activa' : 'login'}
+            {isSessionActive ? 'sesión activa' : `login ${isSessionActive}`}
             <Login />
           </>
         )}
@@ -38,6 +52,13 @@ function App(loginReducer) {
   );
 }
 
-const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
+App.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  loginReducer: PropTypes.object.isRequired,
+  CheckActiveSession: PropTypes.func.isRequired,
+};
 
-export default connect(mapStateToProps, null)(App);
+const mapStateToProps = ({ loginReducer }) => ({ loginReducer });
+const mapDispatchToProps = { CheckActiveSession };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

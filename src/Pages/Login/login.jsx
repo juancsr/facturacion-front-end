@@ -51,11 +51,7 @@ const Login = ({ loginReducer, LoginAction }) => {
     setRememberMe({ ...rememberMe, [event.target.name]: event.target.checked });
   };
 
-  const handleSubmit = (event) => {
-    // event.prevent.default;
-    console.log('iniciar sesión');
-    LoginAction(username, password);
-  }
+  const handleSubmit = (event) => LoginAction(username, password);
 
   return (
     // <div className="Container">
