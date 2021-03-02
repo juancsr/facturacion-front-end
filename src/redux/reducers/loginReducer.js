@@ -2,7 +2,7 @@ import { LOGIN, GET_USERNAME, ASSING_USER_TYPE } from '../types/loginTypes';
 
 const INITIAL_STATE = {
   activeSession: false,
-  username: 'Usuario de prueba',
+  username: '',
   response: '',
   tipoUsuario: null,
 };
