@@ -7,6 +7,7 @@ import facturasReducer from './facturasReducer';
 import clientesReducer from './clientesReducer';
 import operadoresReducer from './operadoresReducer';
 import promocionesReducer from './promocionesReducer';
+import reportesReducer from './reportesReducer';
 
 export default combineReducers({
   loginReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   clientesReducer,
   operadoresReducer,
   promocionesReducer,
+  reportesReducer,
 });

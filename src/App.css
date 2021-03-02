@@ -23,6 +23,10 @@ body {
   color: white;
 }
 
+.ReportButton {
+  height: 100px;
+}
+
 .GridButton {
   margin-right: 3px !important;
 }

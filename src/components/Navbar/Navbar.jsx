@@ -23,6 +23,7 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import './Navbar.css';
 import { loginReducerPropTypes, notificationReducerPropTypes } from '../../propTypes/reducersPropTypes';
 import { CerrarSesion } from '../../redux/actions/loginActions';
@@ -173,11 +174,19 @@ const Navbar = ({ loginReducer = '', notificationReducer, CerrarSesion }) => {
       </NavLink>
     ),
     (
-      /* Crear factura */
+      /* Promociones */
       <NavLink to="/promociones" className="navLinkElement">
         <Button aria-label="show 4 new mails" color="inherit">
           <Mail />
           <span>Promociones</span>
+        </Button>
+      </NavLink>
+    ),
+    (/* Descargar reportes */
+      <NavLink to="/reportes" className="navLinkElement">
+        <Button aria-label="show 4 new mails" color="inherit">
+          <PictureAsPdfIcon />
+          <span>Descargar reportes</span>
         </Button>
       </NavLink>
     ),

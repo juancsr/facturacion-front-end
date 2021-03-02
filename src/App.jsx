@@ -10,6 +10,7 @@ import ListaFacturas from './Pages/Factura/ListarFactura/ListaFacturas';
 import ListaProductos from './Pages/Productos/ListaProductos/ListaProductos';
 import Promociones from './Pages/Promociones/index';
 import Login from './Pages/Login/login';
+import Reportes from './Pages/Reportes/Reportes';
 import { CheckActiveSession } from './redux/actions/loginActions';
 
 function App({ loginReducer, CheckActiveSession }) {
@@ -35,13 +36,16 @@ function App({ loginReducer, CheckActiveSession }) {
                   <Route path="/facturas" component={ListaFacturas} />
                   <Route path="/productos" component={ListaProductos} />
                   <Route path="/promociones" component={Promociones} />
+                  <Route path="/reportes" component={Reportes} />
                 </Paper>
               </Grid>
             </Grid>
           </>
         ) : (
           <>
-            <Login />
+            <Login>
+              <Route path="/login" component={Login} />
+            </Login>
           </>
         )}
     </>
