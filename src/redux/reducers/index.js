@@ -6,6 +6,7 @@ import productosReducer from './productosReducer';
 import facturasReducer from './facturasReducer';
 import clientesReducer from './clientesReducer';
 import operadoresReducer from './operadoresReducer';
+import promocionesReducer from './promocionesReducer';
 
 export default combineReducers({
   loginReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   facturasReducer,
   clientesReducer,
   operadoresReducer,
+  promocionesReducer,
 });
