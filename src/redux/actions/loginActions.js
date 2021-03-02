@@ -31,6 +31,7 @@ const generateSha256Code = function (message) {
 };
 
 const createSessionCookie = (key, value) => sessionStorage.setItem(key, value);
+const removeSessionCookie = (key) => sessionStorage.removeItem(key);
 
 export const LoginAction = (username, password) => async (dispatch) => {
   try {
@@ -54,7 +55,7 @@ export const LoginAction = (username, password) => async (dispatch) => {
 
 export const CheckActiveSession = () => async (dispatch) => {
   const userToken = sessionStorage.getItem('user_token');
-  console.log(userToken);
+
   let activeSession = false;
   if (userToken !== null) {
     activeSession = true;
@@ -62,5 +63,13 @@ export const CheckActiveSession = () => async (dispatch) => {
   dispatch({
     type: LOGIN,
     session: activeSession,
+  });
+};
+
+export const CerrarSesion = () => async (dispatch) => {
+  removeSessionCookie('user_token');
+  dispatch({
+    type: LOGIN,
+    session: false,
   });
 };

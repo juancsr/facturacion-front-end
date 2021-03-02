@@ -20,10 +20,7 @@ function App({ loginReducer, CheckActiveSession }) {
   }, []);
 
   useEffect(() => {
-    if (loginReducer.activeSession) {
-      console.log('updating isSessionActive...');
-      setSessionActive(true);
-    }
+    setSessionActive(loginReducer.activeSession);
   }, [loginReducer.activeSession]);
 
   return (
@@ -44,7 +41,6 @@ function App({ loginReducer, CheckActiveSession }) {
           </>
         ) : (
           <>
-            {isSessionActive ? 'sesión activa' : `login ${isSessionActive}`}
             <Login />
           </>
         )}

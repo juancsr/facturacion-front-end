@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,6 +25,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 import { loginReducerPropTypes, notificationReducerPropTypes } from '../../propTypes/reducersPropTypes';
+import { CerrarSesion } from '../../redux/actions/loginActions';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -90,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Navbar = ({ loginReducer = '', notificationReducer }) => {
+const Navbar = ({ loginReducer = '', notificationReducer, CerrarSesion }) => {
   console.log(loginReducer, notificationReducer);
   const { username } = loginReducer;
 
@@ -120,6 +122,8 @@ const Navbar = ({ loginReducer = '', notificationReducer }) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleSignOut = () => CerrarSesion();
+
   const menuId = 'primary-search-account-menu';
   const renderMenu = (
     <Menu
@@ -133,6 +137,7 @@ const Navbar = ({ loginReducer = '', notificationReducer }) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleSignOut}>Cerrar sesión</MenuItem>
     </Menu>
   );
 
@@ -246,9 +251,11 @@ const Navbar = ({ loginReducer = '', notificationReducer }) => {
 Navbar.propTypes = {
   loginReducer: loginReducerPropTypes.isRequired,
   notificationReducer: notificationReducerPropTypes.isRequired,
+  CerrarSesion: PropTypes.func.isRequired,
 };
 
 // eslint-disable-next-line max-len
 const mapStateToProps = ({ loginReducer, notificationReducer }) => ({ loginReducer, notificationReducer });
+const mapDispatchToProps = { CerrarSesion };
 
-export default connect(mapStateToProps, null)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
