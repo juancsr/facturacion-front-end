@@ -1,6 +1,7 @@
 import {
   TODAS_FACTURAS, REGISTRAR_FACTURA, FACTURAS_HABILITADAS, FACTURAS_DESHABILITADAS, CARGANDO,
   ERROR, PRODUCTOS_FACTURA, ABRIR_FORMULARIO_FACTURA, PRODUCTOS_NUEVA_FACTURA, DESCARGAR_FACTURA,
+  CABECERA_FACTURA,
 } from '../types/facturacionTypes';
 import {
   GET, POST, POST_FILE_DOWNLOAD, BASE_URL,
@@ -90,6 +91,19 @@ export const GetProductosFactura = (idFactura) => async (dispatch) => {
     });
   } catch (error) {
     dispatch(dispatchError('No se pudo obtener el detalle de esta factura'));
+  }
+};
+
+export const GetCabeceraFactura = (idFactura) => async (dispatch) => {
+  try {
+    const url = `${BASE_URL}getCabeceraFactura`;
+    const response = await POST(url, idFactura);
+    dispatch({
+      type: CABECERA_FACTURA,
+      payload: response.data[0],
+    });
+  } catch (error) {
+    dispatch(dispatchError('No se pudo obtener la cabecera de esta factura'));
   }
 };
 

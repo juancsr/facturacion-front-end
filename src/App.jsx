@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,13 +12,22 @@ import ListaProductos from './Pages/Productos/ListaProductos/ListaProductos';
 import Promociones from './Pages/Promociones/index';
 import Login from './Pages/Login/login';
 import Reportes from './Pages/Reportes/Reportes';
+import PagoElectronico from './Pages/PagoElectronico/PagoElectronico';
 import { CheckActiveSession } from './redux/actions/loginActions';
 
 function App({ loginReducer, CheckActiveSession }) {
   const [isSessionActive, setSessionActive] = useState(false);
+  const [isPagoElectronico, setIsPagoElectronico] = useState(false);
 
   useEffect(() => {
     CheckActiveSession();
+    const currentPath = window.location.href.split('/');
+    if (currentPath.find((element) => element === 'pagar') !== undefined) {
+      setIsPagoElectronico(true);
+      console.log('es pago electronico');
+    } else {
+      setIsPagoElectronico(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -26,26 +36,33 @@ function App({ loginReducer, CheckActiveSession }) {
 
   return (
     <>
-      {isSessionActive
+      {isPagoElectronico
         ? (
-          <>
-            <Navbar />
-            <Grid container spacing={2} style={{ textAlign: 'center', margin: '0 auto' }}>
-              <Grid item xs={12}>
-                <Paper>
-                  <Route path="/facturas" component={ListaFacturas} />
-                  <Route path="/productos" component={ListaProductos} />
-                  <Route path="/promociones" component={Promociones} />
-                  <Route path="/reportes" component={Reportes} />
-                </Paper>
-              </Grid>
-            </Grid>
-          </>
+          <Route path="/pagar/:facturaId" component={PagoElectronico} />
         ) : (
           <>
-            <Login>
-              <Route path="/login" component={Login} />
-            </Login>
+            {isSessionActive
+              ? (
+                <>
+                  <Navbar />
+                  <Grid container spacing={2} style={{ textAlign: 'center', margin: '0 auto' }}>
+                    <Grid item xs={12}>
+                      <Paper>
+                        <Route path="/facturas" component={ListaFacturas} />
+                        <Route path="/productos" component={ListaProductos} />
+                        <Route path="/promociones" component={Promociones} />
+                        <Route path="/reportes" component={Reportes} />
+                      </Paper>
+                    </Grid>
+                  </Grid>
+                </>
+              ) : (
+                <>
+                  <Login>
+                    <Route path="/login" component={Login} />
+                  </Login>
+                </>
+              )}
           </>
         )}
     </>

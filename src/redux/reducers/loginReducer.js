@@ -11,7 +11,7 @@ const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case LOGIN:
       return {
-        ...state, activeSession: action.session, response: action.payload,
+        ...state, activeSession: action.session, response: action.payload, isPagoElectronico: false,
       };
     case ASSING_USER_TYPE:
       return { ...state, tipoUsuario: action.payload };
