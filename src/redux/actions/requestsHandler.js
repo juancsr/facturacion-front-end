@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:8080/'; // Local
-// export const BASE_URL = 'https://peppy-generator-303612.uc.r.appspot.com/'; // Production
+// export const BASE_URL = 'http://localhost:8080/'; // Local
+export const BASE_URL = 'https://peppy-generator-303612.uc.r.appspot.com/'; // Production
 
 const https = require('https');
 
